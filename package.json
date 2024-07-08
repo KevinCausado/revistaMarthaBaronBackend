@@ -1,0 +1,16 @@
+{
+  "name": "revista_martha_baron",
+  "version": "1.0.0",
+  "description": "![Proyecto revista Mattha Baron](https://github.com/KingGladiatore/revistaMarthaBaron/assets/170773416/1dc0db27-0608-49fb-bf44-2ce4dc053c2f)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
