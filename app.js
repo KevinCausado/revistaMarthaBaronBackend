@@ -18,3 +18,11 @@ app.listen(PORT, () => {
 
 //Ruta para autenticacion
 app.use("/api/v1/auth", authRouter);
+
+//Ruta no valida
+app.use("*", (req, res) => {
+  res.status(404).json({
+    status: "404",
+    message: "Ruta no encontrada",
+  });
+});
