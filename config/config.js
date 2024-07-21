@@ -12,7 +12,8 @@ module.exports = {
     "host": process.env.DB_HOST,
     "port": process.env.DB_PORT,
     "dialect": "postgres",
-    dialectOptions: {
+    "schema":process.env.DB_SCHEMA,
+    "dialectOptions": {
       ssl: {
         require: true,
         rejectUnauthorized: false // Establece en true si deseas verificar el certificado SSL

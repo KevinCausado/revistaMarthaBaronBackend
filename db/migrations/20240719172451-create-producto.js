@@ -1,8 +1,17 @@
 'use strict';
+
+const dotenv = require("dotenv");
+const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.development";
+console.log(process.env.NODE_ENV);
+dotenv.config({ path: `${process.cwd()}/${envFile}` });
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Productos', {
+    await queryInterface.createTable( {
+      tableName: "productos",
+      schema: process.env.DB_SCHEMA,
+    }, {
       id: {
         allowNull: false,
         autoIncrement: true,

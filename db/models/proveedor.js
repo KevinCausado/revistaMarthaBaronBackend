@@ -36,5 +36,5 @@ module.exports = sequelize.define('Proveedor',{
 },{
   paranoid:true,
   modelName:'Proveedor',
-  schema: 'revista'
+  tableName:'proveedores'
 })
