@@ -29,5 +29,5 @@ module.exports= sequelize.define('Categoria',{
 },{
   paranoid:true, //SoftDelete
   modelName:'Categoria',
-  schema: 'revista'
+  tableName:'categorias',  
 })
