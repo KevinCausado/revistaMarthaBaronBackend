@@ -1,5 +1,13 @@
 "use strict";
 
+<<<<<<< HEAD
+=======
+const dotenv = require("dotenv");
+const envFile = process.env.NODE_ENV === "production" ? ".env.production" : ".env.development";
+console.log(process.env.NODE_ENV);
+dotenv.config({ path: `${process.cwd()}/${envFile}` });
+
+>>>>>>> 440c36a68335a12be547e7ec7dd20c5b082cba5b
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -32,6 +40,10 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
+<<<<<<< HEAD
     await queryInterface.dropTable("categorias");
+=======
+    await queryInterface.dropTable("Categoria");
+>>>>>>> 440c36a68335a12be547e7ec7dd20c5b082cba5b
   },
 };
