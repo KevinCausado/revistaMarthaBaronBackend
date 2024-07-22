@@ -11,6 +11,9 @@ app.listen(process.env.PORT, () => {
   console.log(`Escuchando servidor en puerto : ${process.env.PORT}`);
 });
 
+
+app.use(express.json()) //
+
 //Ruta para autenticacion
 app.use("/api/v1/auth", authRouter);
 
