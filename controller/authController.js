@@ -1,28 +1,24 @@
 const usuario = require("../db/models/usuario");
 
-const signup = (req, res, next) => {
+const signup = async (req, res, next) => {
   const body = req.body;
 
-  const createUser = usuario.create({
-    primerNombre: body.primerNombre,
-    segundoNombre: body.segundoNombre,
-    primerApellido: body.primerApellido,
-    segundoApellido: body.segundoApellido,
-    telefono: body.telefono,
-    email: body.email,
-    estado: body.estado,
+  const crearUsuario = usuario.create({
+    usuario: body.usuario,
+    contrasena: body.contrasena,
   });
 
-  if (!createUser) {
+  if (!crearUsuario) {
     return res.status(400).json({
-      status: "Fail",
-      message: "Error al crear al usuario",
+      status: "Bad Request",
+      message: "No se pudo crear el usuario",
     });
   }
 
   return res.status(201).json({
-    status: "OK",
+    status: "Created",
     message: "Usuario creado con exito",
+    data: crearUsuario,
   });
 };
 

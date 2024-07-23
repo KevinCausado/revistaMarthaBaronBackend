@@ -1,53 +1,62 @@
 'use strict';
+
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable({
-      tableName:'usuarios',
+      tableName:'personas',
       schema:process.env.DB_SCHEMA
     }, {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER
       },
       primerNombre: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: DataTypes.STRING
       },
       segundoNombre: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       primerApellido: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: DataTypes.STRING
       },
       segundoApellido: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: DataTypes.STRING
       },
       telefono: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: DataTypes.STRING
       },
       email: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: DataTypes.STRING
       },
       estado: {
-        type: Sequelize.ENUM('A','I'),
+        allowNull: false,
+        type: DataTypes.ENUM('A','I'),
         defaultValue:'A'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: DataTypes.DATE
       },
       deletedAt: {
-        type: Sequelize.DATE,
+        type: DataTypes.DATE,
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('usuarios');
+    await queryInterface.dropTable('personas');
   }
 };

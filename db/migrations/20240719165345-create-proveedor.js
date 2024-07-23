@@ -1,9 +1,11 @@
 "use strict";
 
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.sequelize.query("create TYPE estado_enum as ENUM('A','I')");
+    // await queryInterface.sequelize.query("create TYPE estado_enum as ENUM('A','I')");
 
     await queryInterface.createTable(
       {
@@ -15,31 +17,34 @@ module.exports = {
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-          type: Sequelize.INTEGER,
+          type: DataTypes.INTEGER,
         },
         nombre: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: DataTypes.STRING,
         },
         direccion: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: DataTypes.STRING,
         },
         ciudad: {
-          type: Sequelize.STRING,
+          allowNull: false,
+          type: DataTypes.STRING,
         },
         estado: {
           alowNull: false,
-          type: "estado_enum",
+          type: DataTypes.ENUM('A','I'),
           defaultValue: "A",
         },
         createdAt: {
           allowNull: false,
-          type: Sequelize.DATE,
+          type: DataTypes.DATE,
         },
         updatedAt: {
-          type: Sequelize.DATE,
+          type: DataTypes.DATE,
         },
         deletedAt: {
-          type: Sequelize.DATE,
+          type: DataTypes.DATE,
         },
       }
     );

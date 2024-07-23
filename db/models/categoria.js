@@ -1,7 +1,8 @@
 'use strict';
 const {
   Model,
-  Sequelize
+  Sequelize,
+  DataTypes
 } = require('sequelize');
 
 const sequelize = require('../../config/database')
@@ -11,20 +12,21 @@ module.exports= sequelize.define('Categoria',{
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: DataTypes.INTEGER
   },
   nombre: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: DataTypes.STRING
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },     
   updatedAt: {        
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
   deletedAt: {        
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
 },{
   paranoid:true, //SoftDelete

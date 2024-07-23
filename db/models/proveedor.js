@@ -1,5 +1,5 @@
 "use strict";
-const { Model, Sequelize } = require("sequelize");
+const { Model, Sequelize, DataTypes } = require("sequelize");
 const sequelize = require('../../config/database');
 
 module.exports = sequelize.define('Proveedor',{
@@ -7,31 +7,34 @@ module.exports = sequelize.define('Proveedor',{
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: DataTypes.INTEGER
   },
   nombre: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: DataTypes.STRING
   },
   direccion: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: DataTypes.STRING
   },
   ciudad: {
-    type: Sequelize.STRING
+    allowNull: false,
+    type: DataTypes.STRING
   }, 
   estado:{
     alowNull:false,
-    type:Sequelize.ENUM('A','I'),
+    type:DataTypes.ENUM('A','I'),
     defaultValue:'A'
   },     
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },     
   updatedAt: {        
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
   deletedAt: {       
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
 },{
   paranoid:true,

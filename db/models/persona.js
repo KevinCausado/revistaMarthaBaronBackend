@@ -1,30 +1,37 @@
 "use strict";
-const { Model, DataTypes } = require("sequelize");
-
-const bcrypt = require("bcrypt");
+const { Model, Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = require("../../config/database");
 
-module.exports = sequelize.define(
-  "Usuario",
-  {
+module.exports = sequelize.define("Persona",{
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    usuario: {
+    primerNombre: {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    contrasena: {
+    segundoNombre: {     
+      type: DataTypes.STRING,
+    },
+    primerApellido: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    segundoApellido: {
+      allowNull: false,
+      type: DataTypes.STRING
+    },
+    telefono: {
       allowNull: false,
       type: DataTypes.STRING,
-      set(value) {
-        const hashPassword = bcrypt.hashSync(value, 10);
-        this.setDataValue("contrasena", hashPassword);
-      },
+    },
+    email: {
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     estado: {
       allowNull: false,
@@ -35,16 +42,16 @@ module.exports = sequelize.define(
       allowNull: false,
       type: DataTypes.DATE,
     },
-    updatedAt: {
+    updatedAt: {    
       type: DataTypes.DATE,
     },
-    deletedAt: {
-      type: DataTypes.DATE,
+    deletedAt: {       
+      type: Sequelize.DATE
     },
   },
   {
     paranoid: true,
-    modelName: "Usuario",
-    tableName: "usuarios",
+    modelName: "Persona",
+    tableName: "personas",
   }
 );
