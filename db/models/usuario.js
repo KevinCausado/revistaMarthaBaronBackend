@@ -16,14 +16,36 @@ module.exports = sequelize.define(
     },
     usuario: {
       allowNull: false,
+      notEmpty: true,
       type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "Por Favor digite el parametro 'usuario' en el cuerpo de la solicitud ",
+        },
+        notEmpty: {
+          msg: "El campo 'usuario' no puede estar vacio, verifique",
+        },
+      },
     },
     contrasena: {
       allowNull: false,
+      notEmpty: true,
       type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "Por Favor digite el parametro 'contrasena' en el cuerpo de la solicitud ",
+        },
+        notEmpty: {
+          msg: "El campo 'contrasena' no puede estar vacio, verifique",
+        },
+      },
       set(value) {
-        const hashPassword = bcrypt.hashSync(value, 10);
-        this.setDataValue("contrasena", hashPassword);
+        if (value && value.trim() !== "") {
+          const hashPassword = bcrypt.hashSync(value, 10);
+          this.setDataValue("contrasena", hashPassword);
+        } else {
+          this.setDataValue("contrasena", value);
+        }
       },
     },
     estado: {
@@ -44,7 +66,6 @@ module.exports = sequelize.define(
   },
   {
     paranoid: true,
-    modelName: "Usuario",
     tableName: "usuarios",
   }
 );

@@ -3,7 +3,9 @@ const { Model, Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = require("../../config/database");
 
-module.exports = sequelize.define("Persona",{
+module.exports = sequelize.define(
+  "Persona",
+  {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -14,16 +16,16 @@ module.exports = sequelize.define("Persona",{
       allowNull: false,
       type: DataTypes.STRING,
     },
-    segundoNombre: {     
+    segundoNombre: {
       type: DataTypes.STRING,
     },
     primerApellido: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     segundoApellido: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     telefono: {
       allowNull: false,
@@ -42,16 +44,15 @@ module.exports = sequelize.define("Persona",{
       allowNull: false,
       type: DataTypes.DATE,
     },
-    updatedAt: {    
+    updatedAt: {
       type: DataTypes.DATE,
     },
-    deletedAt: {       
-      type: Sequelize.DATE
+    deletedAt: {
+      type: Sequelize.DATE,
     },
   },
   {
     paranoid: true,
-    modelName: "Persona",
     tableName: "personas",
   }
 );

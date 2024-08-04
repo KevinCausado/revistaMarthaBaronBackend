@@ -11,63 +11,81 @@ const generateToken = (payload) => {
 };
 
 const signup = async (req, res, next) => {
-  const body = req.body;
+  try {
+    const body = req.body;
 
-  const crearUsuario = await usuarioModel.create({
-    usuario: body.usuario,
-    contrasena: body.contrasena,
-  });
+    const createUser = await usuarioModel.create({
+      usuario: body.usuario,
+      contrasena: body.contrasena,
+    });
 
-  const result = crearUsuario.toJSON();
-  delete result.contrasena;
-  delete result.deletedAt;
+    const result = createUser.toJSON();
+    delete result.contrasena;
+    delete result.deletedAt;
 
-  result.token = generateToken({
-    id: result.id,
-  });
+    result.token = generateToken({
+      id: result.id,
+    });
 
-  if (!result) {
+    if (!result) {
+      return res.status(400).json({
+        status: "Bad Request",
+        message: "No se pudo crear el usuario",
+      });
+    }
+
+    return res.status(201).json({
+      status: "Created",
+      message: "Usuario creado con exito",
+      data: result,
+    });
+  } catch (error) {
+    const errors = error.errors.map((err) => err.message);
+
     return res.status(400).json({
-      status: "Bad Request",
-      message: "No se pudo crear el usuario",
+      status: "Fail",
+      message: errors,
     });
   }
-
-  return res.status(201).json({
-    status: "Created",
-    message: "Usuario creado con exito",
-    data: result,
-  });
 };
 
 const login = async (req, res, next) => {
-  const { usuario, contrasena } = req.body;
+  try {
+    const { usuario, contrasena } = req.body;
 
-  if (!usuario || !contrasena) {
-    return res.status(400).json({
-      status: "Bad Request",
-      message: "Proporcione un usuario o contraseña",
+    if (!usuario || !contrasena) {
+      return res.status(400).json({
+        status: "Bad Request",
+        message: "Proporcione un usuario o contraseña",
+      });
+    }
+
+    const result = await usuarioModel.findOne({ where: { usuario: usuario } });
+
+    if (!result || !(await bcrypt.compare(contrasena, result.contrasena))) {
+      return res.status(401).json({
+        status: "Unauthorized",
+        message: "Usuario o contraseña no valido",
+      });
+    }
+
+    const token = generateToken({
+      id: result.id,
+    });
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Inicio de sesión exitoso",
+      token: token,
+    });
+  } catch (error) {
+    const errors = error.errors.map((err) => err.message);
+
+    return res.status(500).json({
+      status: "Server Error",
+      message: errors,
     });
   }
-
-  const result = await usuarioModel.findOne({ where: { usuario: usuario } });
-
-  if (!result || !(await bcrypt.compare(contrasena, result.contrasena))) {
-    return res.status(401).json({
-      status: "Unauthorized",
-      message: "Usuario o contraseña no valido",
-    });
-  }
-
-  const token = generateToken({
-    id: result.id,
-  });
-
-  return res.status(200).json({
-    status: "Success",
-    message: "Inicio de sesión exitoso",
-    token: token,
-  });
 };
 
-module.exports = { signup,login };
+module.exports = { signup, login };

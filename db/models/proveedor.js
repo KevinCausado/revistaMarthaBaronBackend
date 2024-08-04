@@ -37,7 +37,6 @@ module.exports = sequelize.define('Proveedor',{
     type: DataTypes.DATE
   },
 },{
-  paranoid:true,
-  modelName:'Proveedor',
+  paranoid:true,  
   tableName:'proveedores'
 })

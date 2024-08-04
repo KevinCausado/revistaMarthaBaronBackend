@@ -41,7 +41,6 @@ module.exports = sequelize.defines('Producto',{
   },
   
 },{
-  paranoid:true,
-  modelName:'Producto',
+  paranoid:true,  
   tableName:'productos'  
 })
