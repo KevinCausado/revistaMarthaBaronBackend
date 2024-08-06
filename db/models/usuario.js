@@ -48,6 +48,19 @@ module.exports = sequelize.define(
         }
       },
     },
+    confirmarContrasena: {
+      allowNull: false,
+      notEmpty: true,
+      type: DataTypes.VIRTUAL,
+      validate: {
+        notNull: {
+          msg: "Por Favor digite el parametro 'confirmarContrasena' en el cuerpo de la solicitud ",
+        },
+        notEmpty: {
+          msg: "El campo 'confirmarContrasena' no puede estar vacio, verifique",
+        },
+      },
+    },
     estado: {
       allowNull: false,
       type: DataTypes.ENUM("A", "I"),

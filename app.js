@@ -6,7 +6,10 @@ const express = require("express");
 const { authRouter } = require("./route/authRoute");
 const { catchAsync } = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
+const globalErrorHandler = require("./controller/errorController");
 const app = express();
+
+console.log(`Entorno: ${process.env.NODE_ENV}`);
 
 //Mensaje de prueba consola
 app.listen(process.env.PORT, () => {
@@ -22,14 +25,8 @@ app.use("/api/v1/auth", authRouter);
 app.use(
   "*",
   catchAsync(async (req, res, next) => {
-    throw new AppError("Ruta no encontrada en producción", 404);
+    throw new AppError(`Ruta ${req.originalUrl} no encontrada en ${process.env.NODE_ENV}`, 404);
   })
 );
 
-app.use((err, req, res, next) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-    stack: err.stack,
-  });
-});
+app.use(globalErrorHandler);

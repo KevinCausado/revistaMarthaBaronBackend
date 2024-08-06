@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 
 //Modelo usuarios
 const usuarioModel = require("../db/models/usuario");
+const AppError = require("../utils/appError");
 
 const generateToken = (payload) => {
   return jwt.sign(payload, process.env.JWT, {
@@ -12,12 +13,21 @@ const generateToken = (payload) => {
 
 const signup = async (req, res, next) => {
   try {
-    const body = req.body;
+    const { usuario, contrasena, confirmarContrasena } = req.body;
+
+    if (contrasena !== confirmarContrasena) {
+      return next(new AppError("Las contraseñas no coinciden", 400));
+    }
 
     const createUser = await usuarioModel.create({
-      usuario: body.usuario,
-      contrasena: body.contrasena,
+      usuario: usuario,
+      contrasena: contrasena,
+      confirmarContrasena: confirmarContrasena,
     });
+
+    if (!createUser) {
+      return next(new AppError("No se puedo crear el usuario", 400));
+    }
 
     const result = createUser.toJSON();
     delete result.contrasena;
@@ -26,13 +36,6 @@ const signup = async (req, res, next) => {
     result.token = generateToken({
       id: result.id,
     });
-
-    if (!result) {
-      return res.status(400).json({
-        status: "Bad Request",
-        message: "No se pudo crear el usuario",
-      });
-    }
 
     return res.status(201).json({
       status: "Created",
@@ -54,19 +57,13 @@ const login = async (req, res, next) => {
     const { usuario, contrasena } = req.body;
 
     if (!usuario || !contrasena) {
-      return res.status(400).json({
-        status: "Bad Request",
-        message: "Proporcione un usuario o contraseña",
-      });
+      return next(new AppError("Proporcione un 'usuario' o 'contraseña' ", 400));
     }
 
     const result = await usuarioModel.findOne({ where: { usuario: usuario } });
 
     if (!result || !(await bcrypt.compare(contrasena, result.contrasena))) {
-      return res.status(401).json({
-        status: "Unauthorized",
-        message: "Usuario o contraseña no valido",
-      });
+      return next(new AppError("Usuario o contraseña no valido", 400));
     }
 
     const token = generateToken({
