@@ -4,6 +4,7 @@ const { Model, DataTypes } = require("sequelize");
 const bcrypt = require("bcrypt");
 
 const sequelize = require("../../config/database");
+const AppError = require("../../utils/appError");
 
 module.exports = sequelize.define(
   "Usuario",
@@ -35,17 +36,11 @@ module.exports = sequelize.define(
         notNull: {
           msg: "Por Favor digite el parametro 'contrasena' en el cuerpo de la solicitud ",
         },
-        notEmpty: {
-          msg: "El campo 'contrasena' no puede estar vacio, verifique",
+        emptyField(value) {
+          if (value === "") {
+            throw new AppError("El campo 'contrasena' no puede estar vacio, verifique", 400);
+          }
         },
-      },
-      set(value) {
-        if (value && value.trim() !== "") {
-          const hashPassword = bcrypt.hashSync(value, 10);
-          this.setDataValue("contrasena", hashPassword);
-        } else {
-          this.setDataValue("contrasena", value);
-        }
       },
     },
     confirmarContrasena: {
@@ -56,8 +51,19 @@ module.exports = sequelize.define(
         notNull: {
           msg: "Por Favor digite el parametro 'confirmarContrasena' en el cuerpo de la solicitud ",
         },
-        notEmpty: {
-          msg: "El campo 'confirmarContrasena' no puede estar vacio, verifique",
+        emptyDontMatch(value) {
+          if (value === "") {
+            throw new AppError("El campo 'confirmarContrasena' no puede estar vacio, verifique", 400);
+          }
+          if (value !== this.contrasena) {
+            throw new AppError("Las contraseñas no coinciden", 400);
+          }
+        },
+        set(value) {
+          if (value === this.contrasena) {
+            const hashPassword = bcrypt.hashSync(value, 10);
+            this.setDataValue("contrasena", hashPassword);
+          }
         },
       },
     },

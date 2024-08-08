@@ -15,10 +15,6 @@ const signup = async (req, res, next) => {
   try {
     const { usuario, contrasena, confirmarContrasena } = req.body;
 
-    if (contrasena !== confirmarContrasena) {
-      return next(new AppError("Las contraseñas no coinciden", 400));
-    }
-
     const createUser = await usuarioModel.create({
       usuario: usuario,
       contrasena: contrasena,
