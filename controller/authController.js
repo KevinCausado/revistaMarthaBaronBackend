@@ -41,10 +41,7 @@ const signup = async (req, res, next) => {
   } catch (error) {
     if (error.name === "SequelizeValidationError") {
       const errors = error.errors.map((err) => err.message);
-      return res.status(400).json({
-        status: "Fail",
-        message: errors,
-      });
+      return next(new AppError(errors, 400));
     }
   }
 };
@@ -74,11 +71,7 @@ const login = async (req, res, next) => {
     });
   } catch (error) {
     const errors = error.errors.map((err) => err.message);
-
-    return res.status(500).json({
-      status: "Server Error",
-      message: errors,
-    });
+    return next(new AppError(errors, 400));
   }
 };
 
