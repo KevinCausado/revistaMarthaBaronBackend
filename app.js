@@ -23,7 +23,7 @@ app.use(express.json()); //
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1", categoriaRouter);
 
-//Ruta no valida
+//Rutas no valida
 app.use(
   "*",
   catchAsync(async (req, res, next) => {
