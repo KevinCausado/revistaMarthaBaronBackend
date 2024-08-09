@@ -8,6 +8,7 @@ const { catchAsync } = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
 const { categoriaRouter } = require("./route/categoriaRoute");
+const { connection } = require("./config/connection");
 const app = express();
 
 console.log(`Entorno: ${process.env.NODE_ENV}`);
@@ -16,6 +17,8 @@ console.log(`Entorno: ${process.env.NODE_ENV}`);
 app.listen(process.env.PORT, () => {
   console.log(`Escuchando servidor en puerto : ${process.env.PORT}`);
 });
+
+connection();
 
 app.use(express.json()); //
 

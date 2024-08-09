@@ -9,6 +9,7 @@ module.exports = {
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
     schema: process.env.DB_SCHEMA,
+    logging:false,
     dialectOptions: {
       ssl: {
         require: true,
@@ -31,6 +32,7 @@ module.exports = {
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT,
     schema: process.env.DB_SCHEMA,
+    logging:false,
     dialectOptions: {
       ssl: {
         require: true,
