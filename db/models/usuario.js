@@ -55,8 +55,10 @@ module.exports = sequelize.define(
           if (value === "") {
             throw new AppError("El campo 'confirmarContrasena' no puede estar vacio, verifique", 400);
           }
-          if (value !== this.contrasena) {
-            throw new AppError("Las contraseñas no coinciden", 400);
+          if (this.contrasena) {
+            if (value !== this.contrasena) {
+              throw new AppError("Las contraseñas no coinciden", 400);
+            }
           }
         },
         set(value) {

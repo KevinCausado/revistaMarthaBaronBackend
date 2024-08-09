@@ -39,12 +39,13 @@ const signup = async (req, res, next) => {
       data: result,
     });
   } catch (error) {
-    const errors = error.errors.map((err) => err.message);
-
-    return res.status(400).json({
-      status: "Fail",
-      message: errors,
-    });
+    if (error.name === "SequelizeValidationError") {
+      const errors = error.errors.map((err) => err.message);
+      return res.status(400).json({
+        status: "Fail",
+        message: errors,
+      });
+    }
   }
 };
 
@@ -81,4 +82,33 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { signup, login };
+const authentication = async (req, res, next) => {
+  try {
+    let tokenId = "";
+    let freshUser = "";
+    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+      tokenId = req.headers.authorization.split(" ")[1];
+    }
+    if (!tokenId) {
+      return next(new AppError("Por favor, inicie sesión", 401));
+    }
+
+    const tokenDetail = jwt.verify(tokenId, process.env.JWT);
+
+    freshUser = await usuarioModel.findByPk(tokenDetail.id);
+
+    if (!freshUser) {
+      return next(new AppError("El usuario no existe", 400));
+    }
+
+    req.usuario = freshUser;
+
+    return next();
+  } catch (error) {
+    if (error.name === "JsonWebTokenError") {
+      return next(new AppError("Token invalido", 400));
+    }
+  }
+};
+
+module.exports = { signup, login, authentication };
