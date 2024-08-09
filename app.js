@@ -12,7 +12,7 @@ const app = express();
 
 console.log(`Entorno: ${process.env.NODE_ENV}`);
 
-//Mensaje de prueba consola
+//Escuchando servidor
 app.listen(process.env.PORT, () => {
   console.log(`Escuchando servidor en puerto : ${process.env.PORT}`);
 });
