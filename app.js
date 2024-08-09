@@ -7,6 +7,7 @@ const { authRouter } = require("./route/authRoute");
 const { catchAsync } = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
+const { categoriaRouter } = require("./route/categoriaRoute");
 const app = express();
 
 console.log(`Entorno: ${process.env.NODE_ENV}`);
@@ -20,6 +21,7 @@ app.use(express.json()); //
 
 //Ruta para autenticacion
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1", categoriaRouter);
 
 //Ruta no valida
 app.use(

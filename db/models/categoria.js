@@ -14,7 +14,16 @@ module.exports = sequelize.define(
     },
     nombre: {
       allowNull: false,
+      notEmpty: true,
       type: DataTypes.STRING,
+      validate: {
+        notNull: {
+          msg: "Por Favor digite el parametro 'nombre' en el cuerpo de la solicitud ",
+        },
+        notEmpty: {
+          msg: "El campo 'nombre' no puede estar vacio, verifique",
+        },
+      },
     },
     createdAt: {
       allowNull: false,
