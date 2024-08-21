@@ -1,7 +1,7 @@
 const categoriaModel = require("../db/models/categoria");
 const AppError = require("../utils/appError");
 
-const createCategoria = async (req, res, next) => {
+const create = async (req, res, next) => {
   try {
     const { nombre } = req.body;
 
@@ -33,4 +33,27 @@ const createCategoria = async (req, res, next) => {
   }
 };
 
-module.exports = { createCategoria };
+const getAll = async (req, res, next) => {
+  try {
+    let list = [];
+
+    const result = await categoriaModel.findAll();
+
+    result.forEach((data) => {
+      list.push(data.toJSON());
+    });
+
+    list.forEach((data) => {
+      return delete data.deletedAt;
+    });
+
+    return res.status(200).json({
+      status: "OK",
+      data: list,
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+};
+
+module.exports = { create, getAll };

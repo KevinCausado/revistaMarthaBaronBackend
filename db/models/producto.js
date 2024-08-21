@@ -19,11 +19,19 @@ module.exports = sequelize.defines('Producto',{
   },
   idCategoria: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    references:{
+      model:'categorias', // tabla
+      key:'id'
+     }
   },
   idProveedor: {
     allowNull: false,
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    references:{
+     model:'proveedores', // tabla
+     key:'id'
+    }
   },
   vlrUnitario: {
     allowNull: false,

@@ -1,8 +1,12 @@
 const { authentication, restrictTo } = require("../controller/authController");
-const { createCategoria } = require("../controller/categoriaController");
+const { create, getAll } = require("../controller/categoriaController");
 
 const categoriaRouter = require("express").Router();
 
-categoriaRouter.route("/categoria/create").post(authentication, restrictTo("admin"), createCategoria);
+categoriaRouter.route("/create").post(authentication, restrictTo("admin"), create);
+categoriaRouter.route("/getAll").get(authentication, restrictTo("admin"), getAll);
+
+
+
 
 module.exports = { categoriaRouter };

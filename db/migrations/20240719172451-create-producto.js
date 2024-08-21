@@ -24,10 +24,18 @@ module.exports = {
         idCategoria: {
           allowNull: false,
           type: DataTypes.INTEGER,
+          references:{
+            model:'categorias', // tabla
+            key:'id'
+           }
         },
         idProveedor: {
           allowNull: false,
           type: DataTypes.INTEGER,
+          references:{
+            model:'proveedores', // tabla
+            key:'id'
+           }
         },
         vlrUnitario: {
           allowNull: false,
