@@ -30,6 +30,10 @@ module.exports = {
           type: DataTypes.ENUM("A", "I"),
           defaultValue: "A",
         },
+        rol: {
+          allowNull: false,
+          type: DataTypes.ENUM("admin", "cliente"),
+        },
         createdAt: {
           allowNull: false,
           type: DataTypes.DATE,

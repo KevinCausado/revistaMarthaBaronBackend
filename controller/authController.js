@@ -13,12 +13,13 @@ const generateToken = (payload) => {
 
 const signup = async (req, res, next) => {
   try {
-    const { usuario, contrasena, confirmarContrasena } = req.body;
+    const { usuario, contrasena, confirmarContrasena, rol } = req.body;
 
     const createUser = await usuarioModel.create({
       usuario: usuario,
       contrasena: contrasena,
       confirmarContrasena: confirmarContrasena,
+      rol: rol,
     });
 
     if (!createUser) {
@@ -104,4 +105,13 @@ const authentication = async (req, res, next) => {
   }
 };
 
-module.exports = { signup, login, authentication };
+const restrictTo = (...UserType) => {
+  return (req, res, next) => {
+    if (!UserType.includes(req.usuario.rol)) {
+      return next(new AppError("No tiene permitido realizar esta accion", 403));
+    }
+    next();
+  };
+};
+
+module.exports = { signup, login, authentication, restrictTo };
