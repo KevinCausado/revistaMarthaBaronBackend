@@ -1,12 +1,12 @@
 const { authentication, restrictTo } = require("../controller/authController");
-const { create, getAll } = require("../controller/categoriaController");
+const { createField, getAllField, getFieldById, updateField, deleteField } = require("../controller/categoriaController");
 
-const categoriaRouter = require("express").Router();
+const categoriaRoute = require("express").Router();
 
-categoriaRouter.route("/create").post(authentication, restrictTo("admin"), create);
-categoriaRouter.route("/getAll").get(authentication, restrictTo("admin"), getAll);
+categoriaRoute.route("/create").post(authentication, restrictTo("admin"), createField);
+categoriaRoute.route("/getAll").get(authentication, restrictTo("admin"), getAllField);
+categoriaRoute.route("/getById/:id").get(authentication, restrictTo("admin"), getFieldById);
+categoriaRoute.route("/update/:id").patch(authentication, restrictTo("admin"), updateField);
+categoriaRoute.route("/delete/:id").delete(authentication, restrictTo("admin"), deleteField);
 
-
-
-
-module.exports = { categoriaRouter };
+module.exports = { categoriaRoute };

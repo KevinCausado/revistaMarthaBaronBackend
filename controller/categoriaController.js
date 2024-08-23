@@ -1,7 +1,7 @@
 const categoriaModel = require("../db/models/categoria");
 const AppError = require("../utils/appError");
 
-const create = async (req, res, next) => {
+const createField = async (req, res, next) => {
   try {
     const { nombre } = req.body;
 
@@ -33,7 +33,7 @@ const create = async (req, res, next) => {
   }
 };
 
-const getAll = async (req, res, next) => {
+const getAllField = async (req, res, next) => {
   try {
     let list = [];
 
@@ -56,4 +56,71 @@ const getAll = async (req, res, next) => {
   }
 };
 
-module.exports = { create, getAll };
+const getFieldById = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const findById = await categoriaModel.findByPk(id);
+
+    if (!findById) {
+      return next(new AppError("Registro no encontrado", 404));
+    }
+
+    const result = findById.toJSON();
+
+    delete result.deletedAt;
+
+    return res.status(200).json({
+      status: "Success",
+      data: result,
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+};
+
+const updateField = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
+
+    const result = await categoriaModel.findByPk(id);
+
+    if (!result) {
+      return next(new AppError("Registro no encontrado", 404));
+    }
+
+    result.nombre = body.nombre;
+
+    await result.save();
+
+    return res.status(200).json({
+      status: "Success",
+      data: result,
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+};
+
+const deleteField = async (req, res, next) => {
+  try {
+    const id = req.params.id;   
+
+    const result = await categoriaModel.findByPk(id);
+
+    if (!result) {
+      return next(new AppError("Registro no encontrado", 404));
+    }    
+
+    await result.destroy();
+
+    return res.status(200).json({
+      status: "Success",
+      message:'Registro eliminado'
+    });
+  } catch (error) {
+    return next(new AppError(error, 400));
+  }
+};
+
+module.exports = { createField, getAllField, getFieldById, updateField, deleteField };
