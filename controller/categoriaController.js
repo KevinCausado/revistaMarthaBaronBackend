@@ -1,7 +1,7 @@
 const categoriaModel = require("../db/models/categoria");
 const AppError = require("../utils/appError");
 
-const createField = async (req, res, next) => {
+const createRecord = async (req, res, next) => {
   try {
     const { nombre } = req.body;
 
@@ -33,19 +33,13 @@ const createField = async (req, res, next) => {
   }
 };
 
-const getAllField = async (req, res, next) => {
+const getAllRecord = async (req, res, next) => {
   try {
-    let list = [];
+    const getRecords = await categoriaModel.findAll();
 
-    const result = await categoriaModel.findAll();
+    const list = getRecords.map((item) => item.toJSON());
 
-    result.forEach((data) => {
-      list.push(data.toJSON());
-    });
-
-    list.forEach((data) => {
-      return delete data.deletedAt;
-    });
+    list.forEach((item) => delete item.deletedAt);
 
     return res.status(200).json({
       status: "OK",
@@ -56,7 +50,7 @@ const getAllField = async (req, res, next) => {
   }
 };
 
-const getFieldById = async (req, res, next) => {
+const getRecordById = async (req, res, next) => {
   try {
     const id = req.params.id;
     const findById = await categoriaModel.findByPk(id);
@@ -78,7 +72,7 @@ const getFieldById = async (req, res, next) => {
   }
 };
 
-const updateField = async (req, res, next) => {
+const updateRecord = async (req, res, next) => {
   try {
     const id = req.params.id;
     const body = req.body;
@@ -102,25 +96,25 @@ const updateField = async (req, res, next) => {
   }
 };
 
-const deleteField = async (req, res, next) => {
+const deleteRecord = async (req, res, next) => {
   try {
-    const id = req.params.id;   
+    const id = req.params.id;
 
     const result = await categoriaModel.findByPk(id);
 
     if (!result) {
       return next(new AppError("Registro no encontrado", 404));
-    }    
+    }
 
     await result.destroy();
 
     return res.status(200).json({
       status: "Success",
-      message:'Registro eliminado'
+      message: "Registro eliminado",
     });
   } catch (error) {
     return next(new AppError(error, 400));
   }
 };
 
-module.exports = { createField, getAllField, getFieldById, updateField, deleteField };
+module.exports = { createRecord, getAllRecord, getRecordById, updateRecord, deleteRecord };

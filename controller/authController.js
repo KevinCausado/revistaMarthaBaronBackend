@@ -78,26 +78,23 @@ const login = async (req, res, next) => {
 
 const authentication = async (req, res, next) => {
   try {
-    let tokenId = "";
-    let freshUser = "";
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-      tokenId = req.headers.authorization.split(" ")[1];
+      var token = req.headers.authorization.split(" ")[1];
     }
-    if (!tokenId) {
-      return next(new AppError("Por favor, inicie sesión", 401));
-    }
-
-    const tokenDetail = jwt.verify(tokenId, process.env.JWT);
-
-    freshUser = await usuarioModel.findByPk(tokenDetail.id);
-
-    if (!freshUser) {
-      return next(new AppError("El usuario no existe", 400));
+    
+    if (!token) {
+      return next(new AppError("Por favor, inicie sesion", 401));
     }
 
-    req.usuario = freshUser;
+    const tokenDetail = await jwt.verify(token, process.env.JWT_KEY_PROD);
+    const result = await usuarioModel.findByPk(tokenDetail.id);
 
-    return next();
+    if (!result) {
+      return next(new AppError("Usuario no encontrado", 400));
+    }
+
+    req.usuario = result;
+    next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {
       return next(new AppError("Token invalido", 400));
