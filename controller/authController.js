@@ -86,7 +86,7 @@ const authentication = async (req, res, next) => {
       return next(new AppError("Por favor, inicie sesion", 401));
     }
 
-    const tokenDetail = await jwt.verify(token, process.env.JWT_KEY_PROD);
+    const tokenDetail = await jwt.verify(token, process.env.JWT);
     const result = await usuarioModel.findByPk(tokenDetail.id);
 
     if (!result) {

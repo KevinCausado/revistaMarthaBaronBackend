@@ -89,6 +89,7 @@ const updateRecord = async (req, res, next) => {
 
     return res.status(200).json({
       status: "Success",
+      message: "Registro actualizado",
       data: result,
     });
   } catch (error) {
