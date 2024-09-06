@@ -1,12 +1,14 @@
-const categoriaModel = require("../db/models/categoria");
+const proveedorModel = require("../db/models/proveedor");
 const AppError = require("../utils/appError");
 
 const createRecord = async (req, res, next) => {
   try {
-    const { nombre } = req.body;
+    const { nombre, direccion, ciudad } = req.body;
 
-    const createField = await categoriaModel.create({
+    const createField = await proveedorModel.create({
       nombre: nombre,
+      direccion: direccion,
+      ciudad: ciudad,
     });
 
     if (!createField) {
@@ -35,7 +37,7 @@ const createRecord = async (req, res, next) => {
 
 const getAllRecord = async (req, res, next) => {
   try {
-    const getRecords = await categoriaModel.findAll();
+    const getRecords = await proveedorModel.findAll();
 
     const list = getRecords.map((item) => item.toJSON());
 
@@ -53,7 +55,7 @@ const getAllRecord = async (req, res, next) => {
 const getRecordById = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const findById = await categoriaModel.findByPk(id);
+    const findById = await proveedorModel.findByPk(id);
 
     if (!findById) {
       return next(new AppError("Registro no encontrado", 404));
@@ -74,16 +76,18 @@ const getRecordById = async (req, res, next) => {
 
 const updateRecord = async (req, res, next) => {
   try {
-    const id = req.params.id;
+    const id = req.params.id;    
     const body = req.body;
 
-    const result = await categoriaModel.findByPk(id);
+    const result = await proveedorModel.findByPk(id);
 
     if (!result) {
       return next(new AppError("Registro no encontrado", 404));
     }
 
     result.nombre = body.nombre;
+    result.direccion = body.direccion;
+    result.ciudad = body.ciudad;
 
     await result.save();
 
@@ -101,7 +105,7 @@ const deleteRecord = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    const result = await categoriaModel.findByPk(id);
+    const result = await proveedorModel.findByPk(id);
 
     if (!result) {
       return next(new AppError("Registro no encontrado", 404));
