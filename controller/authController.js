@@ -28,6 +28,9 @@ const signup = async (req, res, next) => {
 
     const result = createUser.toJSON();
     delete result.contrasena;
+    delete result.confirmarContrasena;
+    delete result.createdAt
+    delete result.updatedAt
     delete result.deletedAt;
 
     result.token = generateToken({

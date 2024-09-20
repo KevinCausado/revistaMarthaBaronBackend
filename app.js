@@ -3,6 +3,7 @@ require("dotenv").config({ path: `${process.cwd()}/.env` });
 
 // Variables servidor
 const express = require("express");
+const cors = require('cors')
 const { authRoute } = require("./route/authRoute");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
@@ -21,6 +22,12 @@ app.listen(process.env.PORT, () => {
 connection(); // Conexión base de datos
 
 app.use(express.json()); // Middleware JSON
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  headers: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}))//cors
 
 //Ruta para autenticacion
 app.use("/api/v1/auth", authRoute);
