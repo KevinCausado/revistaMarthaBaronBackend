@@ -15,16 +15,18 @@ const signup = async (req, res, next) => {
   try {
     const { usuario, contrasena, confirmarContrasena, rol } = req.body;
 
+    const findUser = await usuarioModel.findOne({ where: { usuario: usuario } })
+
+    if (findUser) {
+      return next(new AppError('El usuario ya existe', 409))
+    }
+
     const createUser = await usuarioModel.create({
       usuario: usuario,
       contrasena: contrasena,
       confirmarContrasena: confirmarContrasena,
       rol: rol,
     });
-
-    if (!createUser) {
-      return next(new AppError("No se puedo crear el usuario", 400));
-    }
 
     const result = createUser.toJSON();
     delete result.contrasena;
@@ -84,7 +86,7 @@ const authentication = async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
       var token = req.headers.authorization.split(" ")[1];
     }
-    
+
     if (!token) {
       return next(new AppError("Por favor, inicie sesion", 401));
     }
@@ -100,7 +102,7 @@ const authentication = async (req, res, next) => {
     next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {
-      return next(new AppError("Token invalido", 400));
+      return next(new AppError("Token invalido", 401));
     }
   }
 };

@@ -5,6 +5,11 @@ const createRecord = async (req, res, next) => {
   try {
     const { nombre } = req.body;
 
+    const findRecord = await categoriaModel.findOne({where:{nombre:nombre}})
+
+    if (findRecord) {
+      return next (new AppError('El registro ya existe',409))
+    }
     const createField = await categoriaModel.create({
       nombre: nombre,
     });
@@ -76,6 +81,10 @@ const updateRecord = async (req, res, next) => {
   try {
     const id = req.params.id;
     const body = req.body;
+    
+    if (findRecord) {
+      return next (new AppError('El registro ya existe',409))
+    }
 
     const result = await categoriaModel.findByPk(id);
 

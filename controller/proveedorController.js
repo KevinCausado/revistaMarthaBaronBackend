@@ -5,6 +5,12 @@ const createRecord = async (req, res, next) => {
   try {
     const { nombre, direccion, ciudad } = req.body;
 
+    const findRecord = await proveedorModel.findOne({ where: { nombre: nombre } })
+
+    if (findRecord) {
+      return next(new AppError('El registro ya existe', 409))
+    }
+
     const createField = await proveedorModel.create({
       nombre: nombre,
       direccion: direccion,
@@ -76,7 +82,7 @@ const getRecordById = async (req, res, next) => {
 
 const updateRecord = async (req, res, next) => {
   try {
-    const id = req.params.id;    
+    const id = req.params.id;
     const body = req.body;
 
     const result = await proveedorModel.findByPk(id);
