@@ -119,7 +119,7 @@ const deleteRecord = async (req, res, next) => {
 
     await result.destroy();
 
-    return res.status(200).json({
+    return res.status(204).json({
       status: "Success",
       message: "Registro eliminado",
     });

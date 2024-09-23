@@ -95,7 +95,7 @@ const authentication = async (req, res, next) => {
     const result = await usuarioModel.findByPk(tokenDetail.id);
 
     if (!result) {
-      return next(new AppError("Usuario no encontrado", 400));
+      return next(new AppError("Usuario no encontrado", 404));
     }
 
     req.usuario = result;
