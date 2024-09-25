@@ -73,6 +73,7 @@ const login = async (req, res, next) => {
     return res.status(200).json({
       status: "Success",
       message: "Inicio de sesión exitoso",
+      rol: result.rol,
       token: token,
     });
   } catch (error) {
