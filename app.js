@@ -1,18 +1,28 @@
 //Dependencias
 require('dotenv').config({ path: `${process.cwd()}/.env` })
-const express = require('express')
-const app = express();
 const connection = require('./config/connection');
 const router = require('./provider/router');
 const { BASE_URL } = require('./constants')
 const globalErrorHandler = require('./utils/globalErrorHandler');
-const AppError = require('./utils/appError');
+const AppError = require('./utils/AppError');
+const express = require('express')
+const app = express();
 
-//Conexion base de datos y puerto
-connection(app)
+//Conexion base de datos
+connection()
 
 
-//Rutas Base
+//Conexion a puerto
+app.listen(process.env.PORT, () => {
+  console.log(`Escuchando servidor en puerto: ${process.env.PORT}`)
+})
+console.log('Entorno de desarrollo:', process.env.NODE_ENV)
+console.log('Conectado a la base de datos')
+
+app.use(express.json())
+
+
+//Ruta Base
 app.use(`${BASE_URL}`, router)
 
 

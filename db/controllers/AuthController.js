@@ -1,6 +1,6 @@
 class AuthController {
 
-  static signup = (req, res, next) => {
+  static signup(req, res, next) {
     res.status(200).json({
       Estado: 'Success',
       Mensaje: 'Usuario creado con exito'
@@ -8,7 +8,7 @@ class AuthController {
   }
 
 
-  static login = (req, res, next) => {
+  static login(req, res, next) {
     res.status(200).json({
       Estado: 'Success',
       Mensaje: 'Inicio de sesion exitoso'

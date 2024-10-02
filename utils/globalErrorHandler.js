@@ -3,7 +3,7 @@ require('dotenv').config({ path: `${process.cwd()}/.env` })
 const sendErrorDev = (err, res) => {
   const statusCode = err.statusCode || 500
   const status = err.status || 'Error en development'
-  const message = err.message
+  const message = err.message 
   const stack = err.stack
 
   if (err.isOperational) {
@@ -14,9 +14,9 @@ const sendErrorDev = (err, res) => {
     })
   }
 
-  return res.status(500).json({
-    Estado: 'Fatal Error',
-    Mensaje: 'Algo salio mal'
+  return res.status(statusCode).json({
+    Estado: status,
+    Mensaje: message
   })
 }
 
