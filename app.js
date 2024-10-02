@@ -13,8 +13,7 @@ connection(app)
 
 
 //Rutas Base
-app.use(`${BASE_URL}/auth`, router)
-app.use(`${BASE_URL}/categoria`, router)
+app.use(`${BASE_URL}`, router)
 
 
 app.use('*', (req, res, next) => {

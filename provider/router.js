@@ -6,22 +6,22 @@ const router = require('express').Router()
 
 const routes = [
   {
-    path: '/signup',
+    path: '/auth/signup',
     method: 'post',
     handler: AuthController.signup
   },
   {
-    path: '/login',
+    path: '/auth/login',
     method: 'post',
     handler: AuthController.login
   },
   {
-    path: '/',
+    path: '/categoria/',
     method: 'get',
     handler: CategoriaController.getAll
   },
   {
-    path: '/:id',
+    path: '/categoria/:id',
     method: 'get',
     handler: CategoriaController.getById
   },
