@@ -1,42 +1,50 @@
-//Constantes dev
-require("dotenv").config({ path: `${process.cwd()}/.env` });
-
-// Variables servidor
-const express = require("express");
-const cors = require('cors')
-const { authRoute } = require("./route/authRoute");
-const AppError = require("./utils/appError");
-const globalErrorHandler = require("./controller/errorController");
-const { categoriaRoute } = require("./route/categoriaRoute");
-const { connection } = require("./config/connection");
-const { proveedorRoute } = require("./route/proveedorRoute");
+//Dependencias
+require('dotenv').config({ path: `${process.cwd()}/.env` })
+const express = require('express')
 const app = express();
+const connection = require('./config/connection');
+const router = require('./provider/router');
+const { BASE_URL } = require('./constants')
+const globalErrorHandler = require('./utils/globalErrorHandler');
+const AppError = require('./utils/appError');
 
-console.log(`Entorno: ${process.env.NODE_ENV}`);
+//Conexion base de datos y puerto
+connection(app)
 
-//Escuchando servidor
-app.listen(process.env.PORT, () => {
-  console.log(`Escuchando servidor en puerto : ${process.env.PORT}`);
-});
 
-connection(); // Conexión base de datos
+//Rutas Base
+app.use(`${BASE_URL}/auth`, router)
+app.use(`${BASE_URL}/categoria`, router)
 
-app.use(express.json()); // Middleware JSON
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-  headers: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}))//cors
+app.use('*', (req, res, next) => {
+  throw new AppError(`Ruta no encontrada en: ${req.originalUrl}`,404)
+})
 
-//Ruta para autenticacion
-app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/categoria", categoriaRoute);
-app.use("/api/v1/proveedor", proveedorRoute);
 
-//Rutas no validas
-app.use("*", async (req, res, next) => {
-  return next(new AppError(`Ruta ${req.originalUrl} no encontrada en ${process.env.NODE_ENV}`, 404));
-});
+//Manejoador de Errores Global
+app.use(globalErrorHandler)
 
-app.use(globalErrorHandler);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
