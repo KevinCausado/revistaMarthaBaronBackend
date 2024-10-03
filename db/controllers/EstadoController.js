@@ -18,7 +18,7 @@ class EstadoController {
         data: result
       })
     } catch (error) {
-      return next (new AppError(error.message,error.status))
+      return next (new AppError(error.message,error.statusCode))
     }
 
   }

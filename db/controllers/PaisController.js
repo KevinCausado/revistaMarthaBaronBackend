@@ -18,7 +18,7 @@ class PaisController {
         data: result
       })
     } catch (error) {
-      return next(new AppError(error.message, error.status))
+      return next(new AppError(error.message, error.statusCode))
     }
 
   }
@@ -40,7 +40,7 @@ class PaisController {
         data: response
       })
     } catch (error) {
-      return next(new AppError(error.message, error.status))
+      return next(new AppError(error.message, error.statusCode))
     }
 
   }

@@ -1,8 +1,10 @@
 'use strict';
 const {
   Model,
-  DataTypes
+  DataTypes,
 } = require('sequelize');
+const AppError = require('../../../utils/AppError');
+const bcrypt = require('bcrypt')
 
 class Usuario extends Model {
 
@@ -19,7 +21,15 @@ class Usuario extends Model {
       modelName: 'Usuario',
       tableName: 'usuario',
       schema: process.env.DB_SCHEMA,
-      paranoid: true
+      paranoid: true,
+      hooks: {
+        beforeSave: async (usuario) => {
+          if (usuario.contrasena !== usuario.confirmarContrasena) {
+            throw new AppError('Las contraseñas no coinciden', 400)
+          }
+          usuario.contrasena = await bcrypt.hashSync(usuario.contrasena, 10)
+        }
+      }
     }
   }
 }
@@ -33,14 +43,22 @@ const UsuarioSchema = {
     type: DataTypes.INTEGER
   },
   usuario: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+
   },
   contrasena: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+
   },
-  // id_persona: {
-  //   type: DataTypes.INTEGER
-  // },
+  confirmarContrasena: {
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.VIRTUAL,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE
@@ -49,10 +67,11 @@ const UsuarioSchema = {
     allowNull: false,
     type: DataTypes.DATE
   },
-  deletedAt: {        
+  deletedAt: {
     type: DataTypes.DATE
   }
 }
+
 
 module.exports = { Usuario, UsuarioSchema }
 

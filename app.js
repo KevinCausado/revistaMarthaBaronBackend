@@ -26,7 +26,7 @@ app.use(express.json())
 app.use(`${BASE_URL}`, router)
 
 
-app.use('*', (req, res, next) => {
+app.use('*', async(req, res, next) => {
   throw new AppError(`Ruta no encontrada en: ${req.originalUrl}`,404)
 })
 
