@@ -8,15 +8,15 @@ const sendErrorDev = (err, res) => {
 
   if (err.isOperational) {
     return res.status(statusCode).json({
-      Estado: status,
-      Mensaje: message,
-      // stack: stack
+      status: status,
+      message: message,
+      stack: stack
     })
   }
 
   return res.status(statusCode).json({
-    Estado: status,
-    Mensaje: message
+    status: status,
+    message: message
   })
 }
 
@@ -27,8 +27,8 @@ const sendErrorProd = (err, res) => {
   const message = err.message
 
   return res.status(statusCode).json({
-    Estado: status,
-    Mensaje: message
+    status: status,
+    message: message
   })
 }
 

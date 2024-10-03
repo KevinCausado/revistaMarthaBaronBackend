@@ -4,27 +4,24 @@ const {
   DataTypes
 } = require('sequelize');
 
-class Estado extends Model {
+class Ciudad extends Model {
 
   static associate(models) {
-    this.belongsTo(models.Pais,{
-      foreignKey:'id_pais',
-      as:'pais_estado'
-    })
+
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      modelName: 'Estado',
-      tableName: 'estado',
+      modelName: 'Ciudad',
+      tableName: 'ciudad',
       schema: process.env.DB_SCHEMA,
-      paranoid:true
+      paranoid: true
     }
   }
 }
 
-const EstadoSchema = {
+const CiudadSchema = {
 
   id: {
     allowNull: false,
@@ -32,12 +29,8 @@ const EstadoSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  id_pais: {
-    type: DataTypes.INTEGER,
-    References:{
-      model:'Pais',
-      key:'id'
-    }
+  id_estado: {
+    type: DataTypes.INTEGER
   },
   nombre: {
     type: DataTypes.STRING
@@ -50,11 +43,11 @@ const EstadoSchema = {
     allowNull: false,
     type: DataTypes.DATE
   },
-  deletedAt: {    
+  deletedAt: {        
     type: DataTypes.DATE
   }
 }
 
-module.exports = { Estado, EstadoSchema }
+module.exports = { Ciudad, CiudadSchema }
 
 

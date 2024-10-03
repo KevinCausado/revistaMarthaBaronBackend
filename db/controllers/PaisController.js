@@ -13,12 +13,12 @@ class PaisController {
       const result = response.toJSON()
 
       return res.status(200).json({
-        Estado: 'Success',
-        Mensaje: 'Registro creado con exito',
-        Datos: result
+        status: 'Success',
+        message: 'Registro creado con exito',
+        data: result
       })
     } catch (error) {
-      return next(new AppError(error.message, 400))
+      return next(new AppError(error.message, error.status))
     }
 
   }
@@ -36,11 +36,11 @@ class PaisController {
       })   
 
       return res.status(200).json({
-        Estado: 'Success',        
-        Datos: response
+        status: 'Success',        
+        data: response
       })
     } catch (error) {
-      return next(new AppError(error.message, 400))
+      return next(new AppError(error.message, error.status))
     }
 
   }

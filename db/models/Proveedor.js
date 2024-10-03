@@ -4,38 +4,42 @@ const {
   DataTypes
 } = require('sequelize');
 
-class Persona extends Model {
+class Proveedor extends Model {
 
   static associate(models) {
-    // define association here
+
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      modelName: 'Persona',
-      tableName: 'persona',
+      modelName: 'Proveedor',
+      tableName: 'proveedor',
       schema: process.env.DB_SCHEMA,
-      paranoid:true
+      paranoid: true
     }
   }
 }
 
-const PersonaSchema = {
+const ProveedorSchema = {
+
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  primer_nombre: {
+  codigo: {
     type: DataTypes.STRING
   },
-  segundo_nombre: {
+  tipo_servicio: {
     type: DataTypes.STRING
   },
-  primer_apellido: {
+  nombre: {
     type: DataTypes.STRING
+  },
+  direccion: {
+    type: DataTypes.TEXT
   },
   email: {
     type: DataTypes.STRING
@@ -43,16 +47,10 @@ const PersonaSchema = {
   telefono: {
     type: DataTypes.STRING
   },
-  direccion: {
-    type: DataTypes.STRING
-  },
-  rol: {
-    type: DataTypes.STRING
-  },
-  id_ciudad_municipio: {
+  id_ciudad: {
     type: DataTypes.INTEGER
   },
-  id_ciudad_departamento: {
+  id_estado: {
     type: DataTypes.INTEGER
   },
   id_pais: {
@@ -66,10 +64,11 @@ const PersonaSchema = {
     allowNull: false,
     type: DataTypes.DATE
   },
-  deletedAt: {    
+  deletedAt: {
     type: DataTypes.DATE
   }
 }
 
-module.exports = { Persona, PersonaSchema }
+module.exports = { Proveedor, ProveedorSchema }
+
 
