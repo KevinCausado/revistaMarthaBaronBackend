@@ -7,7 +7,14 @@ const {
 class Proveedor extends Model {
 
   static associate(models) {
-
+    this.hasMany(models.Producto,{
+      foreignKey:'id_proveedor',
+      as:'producto_proveedor'
+    }),
+    this.belongsTo(models.Ciudad,{
+      foreignKey:'id_ciudad',
+      as:'proveedor_ciudad'
+    })    
   }
 
   static config(sequelize) {
@@ -33,7 +40,11 @@ const ProveedorSchema = {
     type: DataTypes.STRING
   },
   tipo_servicio: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER,
+    References:{
+      model:'TipoDetalle',
+      key:'id'
+    }
   },
   nombre: {
     type: DataTypes.STRING
@@ -48,14 +59,12 @@ const ProveedorSchema = {
     type: DataTypes.STRING
   },
   id_ciudad: {
-    type: DataTypes.INTEGER
-  },
-  id_estado: {
-    type: DataTypes.INTEGER
-  },
-  id_pais: {
-    type: DataTypes.INTEGER
-  },
+    type: DataTypes.INTEGER,
+    References:{
+      model:'Ciudad',
+      key:'id'
+    }
+  },  
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

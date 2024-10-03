@@ -4,24 +4,27 @@ const {
   DataTypes
 } = require('sequelize');
 
-  class Categoria extends Model {
+  class Pais extends Model {
     
     static associate(models) {
-      // define association here
+      this.hasMany(models.Estado,{
+        foreignKey:'id_pais',
+        as:'pais_estado'
+      })      
     }
 
-    static config(sequelize) {
+    static config(sequelize){
       return {
         sequelize,
-        modelName: 'Categoria',
-        tableName: 'categoria',
-        schema: process.env.DB_SCHEMA,
+        modelName:'Pais',
+        tableName:'pais',
+        schema:process.env.DB_SCHEMA,
         paranoid:true
       }
     }
   }
 
-  const CategoriaSchema = {
+  const PaisSchema = {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -29,10 +32,11 @@ const {
       type: DataTypes.INTEGER
     },
     codigo: {
+      allowNull:false,
       type: DataTypes.STRING
     },
-    descripcion: {
-      type: DataTypes.TEXT
+    nombre: {
+      type: DataTypes.STRING
     },
     createdAt: {
       allowNull: false,
@@ -42,9 +46,13 @@ const {
       allowNull: false,
       type: DataTypes.DATE
     },
-    deletedAt: {              
+    deletedAt: {      
       type: DataTypes.DATE
     }
   }
 
-  module.exports = {Categoria,CategoriaSchema}
+  module.exports = {Pais,PaisSchema}
+
+  
+  
+  

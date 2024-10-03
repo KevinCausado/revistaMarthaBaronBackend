@@ -31,17 +31,19 @@ module.exports = {
         type: DataTypes.STRING
       },
       rol: {
-        type: DataTypes.STRING
+        type: DataTypes.INTEGER,
+        References:{
+          model:'TipoDetalle',
+          key:'id'
+        }
       },
-      id_ciudad_municipio: {
-        type: DataTypes.INTEGER
-      },
-      id_ciudad_departamento: {
-        type: DataTypes.INTEGER
-      },
-      id_pais: {
-        type: DataTypes.INTEGER
-      },
+      id_ciudad: {
+        type: DataTypes.INTEGER,
+        References:{
+          model:'Ciudad',
+          key:'id'
+        }
+      },  
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE
@@ -50,7 +52,7 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE
       },
-      deletedAt: {        
+      deletedAt: {    
         type: DataTypes.DATE
       }
     });

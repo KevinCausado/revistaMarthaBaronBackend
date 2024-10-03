@@ -7,7 +7,14 @@ const {
 class Persona extends Model {
 
   static associate(models) {
-    // define association here
+    this.belongsTo(models.TipoDetalle,{
+      foreignKey:'rol',
+      as:'persona_detalle'
+    }),
+    this.belongsTo(models.Ciudad,{
+      foreignKey:'id_ciudad',
+      as:'persona_ciudad'
+    })    
   }
 
   static config(sequelize) {
@@ -47,17 +54,19 @@ const PersonaSchema = {
     type: DataTypes.STRING
   },
   rol: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER,
+    References:{
+      model:'TipoDetalle',
+      key:'id'
+    }
   },
-  id_ciudad_municipio: {
-    type: DataTypes.INTEGER
-  },
-  id_ciudad_departamento: {
-    type: DataTypes.INTEGER
-  },
-  id_pais: {
-    type: DataTypes.INTEGER
-  },
+  id_ciudad: {
+    type: DataTypes.INTEGER,
+    References:{
+      model:'Ciudad',
+      key:'id'
+    }
+  },  
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

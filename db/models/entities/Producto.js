@@ -7,7 +7,14 @@ const {
 class Producto extends Model {
 
   static associate(models) {
-
+    this.belongsTo(models.Categoria,{
+      foreignKey:'id_categoria',
+      as:'producto_categoria'
+    }),
+    this.belongsTo(models.Proveedor,{
+      foreignKey:'id_proveedor',
+      as:'producto_proveedor'
+    })
   }
 
   static config(sequelize) {
