@@ -23,6 +23,21 @@ class EstadoController {
 
   }
 
+
+  static async getAll(req, res, next) {
+    try {
+      const response = await models.Estado.findAll()
+
+      return res.status(200).json({
+        status: 'Success',
+        data: response
+      })
+    } catch (error) {
+      return next(new AppError(error.message, error.statusCode))
+    }
+
+  }
+
 }
 
 

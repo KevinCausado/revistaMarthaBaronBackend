@@ -5,7 +5,7 @@ class CategoriaController {
 
   static async create(req, res, next) {
     try {
-      const response = await models.Pais.create({
+      const response = await models.Categoria.create({
         codigo: req.body.codigo,
         descripcion: req.body.descripcion
       })

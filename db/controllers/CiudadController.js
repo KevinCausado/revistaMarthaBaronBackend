@@ -5,7 +5,7 @@ class CiudadController {
 
   static async create(req, res, next) {
     try {
-      const response = await models.Pais.create({
+      const response = await models.Ciudad.create({
         id_estado: req.body.id_estado,
         nombre: req.body.nombre
       })
@@ -25,7 +25,7 @@ class CiudadController {
 
   static async getAll(req, res, next) {
     try {
-      const response = await models.Pais.findAll()   
+      const response = await models.Ciudad.findAll()   
 
       return res.status(200).json({
         status: 'Success',        
@@ -40,4 +40,4 @@ class CiudadController {
 }
 
 
-module.exports = PaisController
+module.exports = CiudadController

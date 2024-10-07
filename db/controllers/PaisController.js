@@ -25,18 +25,10 @@ class PaisController {
 
   static async getAll(req, res, next) {
     try {
-      const response = await models.Pais.findAll({
-        attributes: ['id','codigo', 'nombre'],
-        include: [
-          {
-          model: models.Estado,
-          as: 'pais_estado',
-          attributes: ['nombre']
-        }]
-      })   
+      const response = await models.Pais.findAll()
 
       return res.status(200).json({
-        status: 'Success',        
+        status: 'Success',
         data: response
       })
     } catch (error) {

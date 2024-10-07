@@ -1,8 +1,8 @@
 const AuthController = require('../db/controllers/AuthController')
-const CategoriaController = require('../db/controllers/CategoriaController')
-const PaisController = require('../db/controllers/CiudadController')
-const CiudadController = require('../db/controllers/CiudadController')
+const PaisController = require('../db/controllers/PaisController')
 const EstadoController = require('../db/controllers/EstadoController')
+const CiudadController = require('../db/controllers/CiudadController')
+const CategoriaController = require('../db/controllers/CategoriaController')
 
 const router = require('express').Router()
 
@@ -23,27 +23,6 @@ const routes = [
     protected: true,
   },
 
-  //Categoria
-  {
-    path: '/categoria/',
-    method: 'get',
-    handler: CategoriaController.getAll,
-    protected: true,
-  },
-  {
-    path: '/categoria/:id',
-    method: 'get',
-    handler: CategoriaController.getById,
-    protected: true,
-  },
-  
-   //Ciudad
-  {
-    path: '/ciudad/',
-    method: 'post',
-    handler: CiudadController.create,
-    protected: true,
-  },
   //Pais
   {
     path: '/pais/',
@@ -65,16 +44,50 @@ const routes = [
     handler: EstadoController.create,
     protected: true,
   },
+  {
+    path: '/estado/',
+    method: 'get',
+    handler: EstadoController.getAll,
+    protected: true,
+  },
+
+  //Ciudad
+  {
+    path: '/ciudad/',
+    method: 'post',
+    handler: CiudadController.create,
+    protected: true,
+  },
+  {
+    path: '/ciudad/',
+    method: 'get',
+    handler: CiudadController.getAll,
+    protected: true,
+  },
+
+  //Categoria
+  {
+    path: '/categoria/',
+    method: 'post',
+    handler: CategoriaController.create,
+    protected: true,
+  },
+  {
+    path: '/categoria/',
+    method: 'get',
+    handler: CategoriaController.getAll,
+    protected: true,
+  },
 ]
 
 routes.forEach((route) => {
 
   if (route.protected) {
-    router.route(route.path)[route.method](
+   return router.route(route.path)[route.method](
       AuthController.authentication, AuthController.restrictTo(1),
-     route.handler)
+      route?.handler)
   }
-  router.route(route.path)[route.method](route.handler)
+  return router.route(route.path)[route.method](route.handler)
 
 })
 

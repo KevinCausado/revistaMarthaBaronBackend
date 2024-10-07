@@ -37,7 +37,7 @@ app.use(`${BASE_URL}`, router)
 
 
 app.use('*', async(req, res, next) => {
-  throw new AppError(`Ruta no encontrada en: ${req.originalUrl}`,404)
+  return next (new AppError(`Ruta no encontrada en: ${req.originalUrl}`,404))
 })
 
 
