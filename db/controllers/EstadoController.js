@@ -14,7 +14,7 @@ class EstadoController {
 
       return res.status(200).json({
         status: 'Success',
-        mesage: 'Registro creado con exito',
+        mesage: 'Registro creado',
         data: result
       })
     } catch (error) {

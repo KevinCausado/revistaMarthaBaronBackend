@@ -78,6 +78,24 @@ const routes = [
     handler: CategoriaController.getAll,
     protected: true,
   },
+  {
+    path: '/categoria/:id',
+    method: 'get',
+    handler: CategoriaController.getById,
+    protected: true,
+  },
+  {
+    path: '/categoria/:id',
+    method: 'patch',
+    handler: CategoriaController.Update,
+    protected: true,
+  },
+  {
+    path: '/categoria/:id',
+    method: 'delete',
+    handler: CategoriaController.Delete,
+    protected: true,
+  },
 ]
 
 routes.forEach((route) => {

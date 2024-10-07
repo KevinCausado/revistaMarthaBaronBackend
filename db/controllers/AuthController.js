@@ -34,7 +34,7 @@ class AuthController {
 
       return res.status(201).json({
         status: 'Success',
-        message: 'Registro creado con exito',
+        message: 'Usuario creado',
         data: result        
       })
 

@@ -14,7 +14,7 @@ class CiudadController {
 
       return res.status(200).json({
         status: 'Success',
-        message: 'Registro creado con exito',
+        message: 'Registro creado',
         data: result
       })
     } catch (error) {
