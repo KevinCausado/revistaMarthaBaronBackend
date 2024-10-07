@@ -14,7 +14,11 @@ class Persona extends Model {
     this.belongsTo(models.Ciudad,{
       foreignKey:'id_ciudad',
       as:'persona_ciudad'
-    })    
+    }),
+    this.hasMany(models.Movimiento,{
+      foreignKey:'id_persona',
+      as:'movimiento_persona'
+     })    
   }
 
   static config(sequelize) {

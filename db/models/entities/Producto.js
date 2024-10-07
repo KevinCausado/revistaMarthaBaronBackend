@@ -14,6 +14,14 @@ class Producto extends Model {
     this.belongsTo(models.Proveedor,{
       foreignKey:'id_proveedor',
       as:'producto_proveedor'
+    }),
+    this.hasOne(models.MovimientoDetalle,{
+      foreignKey:'id_producto',
+      as:'movimiento_detalle_producto'
+     }),
+     this.hasMany(models.Inventario,{
+      foreignKey:'id_producto',
+      as:'inventario_producto'
     })
   }
 

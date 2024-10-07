@@ -7,6 +7,7 @@ const globalErrorHandler = require('./utils/globalErrorHandler');
 const AppError = require('./utils/AppError');
 const express = require('express')
 const app = express();
+const cors = require('cors')
 
 //Conexion base de datos
 connection()
@@ -21,6 +22,15 @@ console.log('Conectado a la base de datos')
 
 app.use(express.json())
 
+//Cors
+corsOptions = {
+  origin:['http://localhost:5173','http://localhost:3000'],
+  headers:['GET','POST','PUT','DELETE'],
+  allowedHeaders:['Content-Type','Authorization']
+}
+
+app.use (cors(corsOptions))
+
 
 //Ruta Base
 app.use(`${BASE_URL}`, router)
@@ -31,7 +41,7 @@ app.use('*', async(req, res, next) => {
 })
 
 
-//Manejoador de Errores Global
+//Manejador de Errores Global
 app.use(globalErrorHandler)
 
 

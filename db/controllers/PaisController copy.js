@@ -26,7 +26,7 @@ class PaisController {
   static async getAll(req, res, next) {
     try {
       const response = await models.Pais.findAll({
-        attributes: ['codigo', 'nombre'],
+        attributes: ['id','codigo', 'nombre'],
         include: [
           {
           model: models.Estado,

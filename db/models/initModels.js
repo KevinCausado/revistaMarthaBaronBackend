@@ -8,9 +8,9 @@ const { Ciudad, CiudadSchema } = require('./entities/Ciudad')
 const { Categoria, CategoriaSchema } = require('./entities/Categoria')
 const {Proveedor,ProveedorSchema} = require('./entities/Proveedor')
 const {Producto,ProductoSchema} = require('./entities/Producto')
-//Movimiento
-//MovimientoDetalle
-//Inventario
+const {Movimiento,MovimientoSchema} = require('./entities/Movimiento')
+const {MovimientoDetalle,MovimientoDetalleSchema} = require('./entities/MovimientoDetalle')
+const {Inventario,InventarioSchema} = require('./entities/Inventario')
 
 
 const initModels = (sequelize) => {
@@ -24,7 +24,10 @@ const initModels = (sequelize) => {
     Ciudad: Ciudad.init(CiudadSchema, Ciudad.config(sequelize)),
     Categoria: Categoria.init(CategoriaSchema, Categoria.config(sequelize)),
     Proveedor: Proveedor.init(ProveedorSchema, Proveedor.config(sequelize)),
-    Producto: Producto.init(ProductoSchema, Producto.config(sequelize))
+    Producto: Producto.init(ProductoSchema, Producto.config(sequelize)),
+    Movimiento: Movimiento.init(MovimientoSchema, Movimiento.config(sequelize)),
+    MovimientoDetalle: MovimientoDetalle.init(MovimientoDetalleSchema, MovimientoDetalle.config(sequelize)),
+    Inventario: Inventario.init(InventarioSchema, Inventario.config(sequelize))
   }
 
   Object.values((models)).forEach((model) => {

@@ -1,12 +1,10 @@
 const AuthController = require('../db/controllers/AuthController')
 const CategoriaController = require('../db/controllers/CategoriaController')
-const PaisController = require('../db/controllers/PaisController')
+const PaisController = require('../db/controllers/CiudadController')
+const CiudadController = require('../db/controllers/CiudadController')
 const EstadoController = require('../db/controllers/EstadoController')
 
 const router = require('express').Router()
-
-
-
 
 
 const routes = [
@@ -38,7 +36,14 @@ const routes = [
     handler: CategoriaController.getById,
     protected: true,
   },
-
+  
+   //Ciudad
+  {
+    path: '/ciudad/',
+    method: 'post',
+    handler: CiudadController.create,
+    protected: true,
+  },
   //Pais
   {
     path: '/pais/',
@@ -65,7 +70,9 @@ const routes = [
 routes.forEach((route) => {
 
   if (route.protected) {
-    router.route(route.path)[route.method](AuthController.authentication, AuthController.restrictTo(1), route.handler)
+    router.route(route.path)[route.method](
+      AuthController.authentication, AuthController.restrictTo(1),
+     route.handler)
   }
   router.route(route.path)[route.method](route.handler)
 

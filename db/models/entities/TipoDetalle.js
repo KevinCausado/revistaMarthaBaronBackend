@@ -15,6 +15,11 @@ class TipoDetalle extends Model {
      this.hasOne(models.Persona,{
       foreignKey:'rol',
       as:'persona_detalle'
+    }),
+
+    this.hasOne(models.Movimiento,{
+      foreignKey:'tipo_movimiento',
+      as:'tipo_movimiento_detalle'
     })
   }
 

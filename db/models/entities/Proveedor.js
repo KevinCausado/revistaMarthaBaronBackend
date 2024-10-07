@@ -14,7 +14,11 @@ class Proveedor extends Model {
     this.belongsTo(models.Ciudad,{
       foreignKey:'id_ciudad',
       as:'proveedor_ciudad'
-    })    
+    }),
+    this.hasMany(models.Movimiento,{
+      foreignKey:'id_proveedor',
+      as:'movimiento_proveedor'
+     })    
   }
 
   static config(sequelize) {

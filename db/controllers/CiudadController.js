@@ -1,13 +1,13 @@
 const AppError = require('../../utils/AppError')
 const { models } = require('../../config/sequelize')
 
-class CategoriaController {
+class CiudadController {
 
   static async create(req, res, next) {
     try {
       const response = await models.Pais.create({
-        codigo: req.body.codigo,
-        descripcion: req.body.descripcion
+        id_estado: req.body.id_estado,
+        nombre: req.body.nombre
       })
 
       const result = response.toJSON()
@@ -25,7 +25,7 @@ class CategoriaController {
 
   static async getAll(req, res, next) {
     try {
-      const response = await models.Categoria.findAll()   
+      const response = await models.Pais.findAll()   
 
       return res.status(200).json({
         status: 'Success',        
@@ -40,4 +40,4 @@ class CategoriaController {
 }
 
 
-module.exports = CategoriaController
+module.exports = PaisController
