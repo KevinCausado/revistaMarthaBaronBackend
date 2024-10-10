@@ -16,12 +16,14 @@ class CategoriaController {
         descripcion: req.body.descripcion
       })
 
-      const result = response.toJSON()
+      response = response.toJSON()
+      delete response.updatedAt
+      delete response.deletedAt
 
       return res.status(200).json({
         status: 'Success',
         message: 'Registro creado',
-        data: result
+        data: response
       })
     } catch (error) {
       return next(new AppError(error.message, error.statusCode))
@@ -31,7 +33,11 @@ class CategoriaController {
 
   static async getAll(req, res, next) {
     try {
-      const response = await models.Categoria.findAll()
+      const response = await models.Categoria.findAll({
+        attributes: {
+          exclude: ['updatedAt', 'deletedAt']
+        }
+      })
 
       return res.status(200).json({
         status: 'Success',
@@ -46,7 +52,11 @@ class CategoriaController {
   static async getById(req, res, next) {
     try {
       const id = req.params.id
-      const response = await models.Categoria.findByPk(id)
+      const response = await models.Categoria.findByPk(id, {
+        attributes: {
+          exclude: ['updatedAt', 'deletedAt']
+        }
+      })
 
       if (!response) {
         return next(new AppError('El registro no existe', 404))
@@ -65,7 +75,11 @@ class CategoriaController {
   static async Update(req, res, next) {
     try {
       const id = req.params.id
-      const response = await models.Categoria.findByPk(id)
+      const response = await models.Categoria.findByPk(id, {
+        attributes: {
+          exclude: ['createdAt', 'deletedAt']
+        }
+      })
 
       if (!response) {
         return next(new AppError('El registro no existe', 404))

@@ -64,8 +64,7 @@ class AuthController {
 
       return res.status(200).json({
         status: 'Success',
-        message: 'Inicio de sesion exitoso',
-        data: response,
+        message: 'Inicio de sesion exitoso',        
         token: token
       })
     } catch (error) {

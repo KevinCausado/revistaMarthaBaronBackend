@@ -36,6 +36,24 @@ const routes = [
     handler: PaisController.getAll,
     protected: true,
   },
+  {
+    path: '/pais/:id',
+    method: 'get',
+    handler: PaisController.getById,
+    protected: true,
+  },
+  {
+    path: '/pais/:id',
+    method: 'patch',
+    handler: PaisController.Update,
+    protected: true,
+  },
+  {
+    path: '/pais/:id',
+    method: 'delete',
+    handler: PaisController.Delete,
+    protected: true,
+  },
 
   //Estado
   {
@@ -50,6 +68,24 @@ const routes = [
     handler: EstadoController.getAll,
     protected: true,
   },
+  {
+    path: '/estado/:id',
+    method: 'get',
+    handler: EstadoController.getById,
+    protected: true,
+  },
+  {
+    path: '/estado/:id',
+    method: 'patch',
+    handler: EstadoController.Update,
+    protected: true,
+  },
+  {
+    path: '/estado/:id',
+    method: 'delete',
+    handler: EstadoController.Delete,
+    protected: true,
+  },
 
   //Ciudad
   {
@@ -62,6 +98,24 @@ const routes = [
     path: '/ciudad/',
     method: 'get',
     handler: CiudadController.getAll,
+    protected: true,
+  },
+  {
+    path: '/ciudad/:id',
+    method: 'get',
+    handler: CiudadController.getById,
+    protected: true,
+  },
+  {
+    path: '/ciudad/:id',
+    method: 'patch',
+    handler: CiudadController.Update,
+    protected: true,
+  },
+  {
+    path: '/ciudad/:id',
+    method: 'delete',
+    handler: CiudadController.Delete,
     protected: true,
   },
 
