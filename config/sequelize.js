@@ -5,6 +5,6 @@ const sequelize = new Sequelize(config[process.env.NODE_ENV])
 
 // Sincronizando Modelos
 initModels(sequelize)
-sequelize.sync({ alter: true })
+sequelize.sync()
 
 module.exports = sequelize
