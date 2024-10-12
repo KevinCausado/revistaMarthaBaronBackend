@@ -1,28 +1,23 @@
 const AppError = require('../../utils/AppError')
 const { models } = require('../../config/sequelize')
 
-class PersonaController {
+class ProductoController {
 
   static async create(req, res, next) {
     try {
-      let response = await models.Persona.findOne({ where: { documento: req.body.documento } })
+      let response = await models.Producto.findOne({ where: { codigo: req.body.codigo } })
 
       if (response) {
         return next(new AppError('El registro existe', 409))
       }
 
-      response = await models.Persona.create({
-        tipo_documento: req.body.tipo_documento,
-        documento: req.body.documento,
-        primer_nombre: req.body.primer_nombre,
-        segundo_nombre: req.body.segundo_nombre,
-        primer_apellido: req.body.primer_apellido,
-        segundo_apellido: req.body.segundo_apellido,
-        email: req.body.email,
-        telefono: req.body.telefono,
-        direccion: req.body.direccion,
-        rol: req.body.rol,
-        id_ciudad: req.body.id_ciudad
+      response = await models.Producto.create({
+        codigo: req.body.codigo,
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        id_categoria: req.body.id_categoria,
+        id_proveedor: req.body.id_proveedor,
+        precio_entrada: req.body.precio_entrada
       })
 
       response = response.toJSON()
@@ -42,7 +37,7 @@ class PersonaController {
 
   static async getAll(req, res, next) {
     try {
-      const response = await models.Persona.findAll({
+      const response = await models.Producto.findAll({
         attributes: {
           exclude: ['updatedAt', 'deletedAt']
         }
@@ -61,7 +56,7 @@ class PersonaController {
   static async getById(req, res, next) {
     try {
       const id = req.params.id
-      const response = await models.Persona.findByPk(id, {
+      const response = await models.Producto.findByPk(id, {
         attributes: {
           exclude: ['updatedAt', 'deletedAt']
         }
@@ -84,7 +79,7 @@ class PersonaController {
   static async Update(req, res, next) {
     try {
       const id = req.params.id
-      const response = await models.Persona.findByPk(id, {
+      const response = await models.Producto.findByPk(id, {
         attributes: {
           exclude: ['createdAt', 'deletedAt']
         }
@@ -94,17 +89,12 @@ class PersonaController {
         return next(new AppError('El registro no existe', 404))
       }
 
-        response.tipo_documento = req.body.tipo_documento,
-        response.documento = req.body.documento,
-        response.primer_nombre = req.body.primer_nombre,
-        response.segundo_nombre = req.body.segundo_nombre,
-        response.primer_apellido = req.body.primer_apellido,
-        response.segundo_apellido = req.body.segundo_apellido,
-        response.email = req.body.email,
-        response.telefono = req.body.telefono,
-        response.direccion = req.body.direccion,
-        response.rol = req.body.rol,
-        response.id_ciudad = req.body.id_ciudad
+       response.codigo = req.body.codigo,
+       response.nombre = req.body.nombre,
+       response.descripcion = req.body.descripcion,
+       response.id_categoria = req.body.id_categoria,
+       response.id_proveedor = req.body.id_proveedor,
+       response.precio_entrada = req.body.precio_entrada
 
       await response.save()
 
@@ -123,7 +113,7 @@ class PersonaController {
   static async Delete(req, res, next) {
     try {
       const id = req.params.id
-      const response = await models.Persona.findByPk(id)
+      const response = await models.Producto.findByPk(id)
 
       if (!response) {
         return next(new AppError('El registro no existe', 404))
@@ -145,4 +135,4 @@ class PersonaController {
 }
 
 
-module.exports = PersonaController
+module.exports = ProductoController

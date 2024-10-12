@@ -1,13 +1,13 @@
 const { Usuario, UsuarioSchema } = require('./entities/Usuario') // Login , Signup
 const { Tipo, TipoSchema } = require('./entities/Tipo') // OK
 const { TipoDetalle, TipoDetalleSchema } = require('./entities/TipoDetalle') // OK
-const { Persona, PersonaSchema } = require('./entities/Persona')
+const { Persona, PersonaSchema } = require('./entities/Persona') // OK
 const { Pais, PaisSchema } = require('./entities/Pais') // Ok
 const { Estado, EstadoSchema } = require('./entities/Estado') // OK
 const { Ciudad, CiudadSchema } = require('./entities/Ciudad') // OK
 const { Categoria, CategoriaSchema } = require('./entities/Categoria') // OK
-const {Proveedor,ProveedorSchema} = require('./entities/Proveedor')
-const {Producto,ProductoSchema} = require('./entities/Producto')
+const {Proveedor,ProveedorSchema} = require('./entities/Proveedor') // OK
+const {Producto,ProductoSchema} = require('./entities/Producto') // OK
 const {Movimiento,MovimientoSchema} = require('./entities/Movimiento')
 const {MovimientoDetalle,MovimientoDetalleSchema} = require('./entities/MovimientoDetalle')
 const {Inventario,InventarioSchema} = require('./entities/Inventario')

@@ -6,6 +6,9 @@ const CategoriaController = require('../db/controllers/CategoriaController')
 const TipoController = require('../db/controllers/TipoController')
 const TipoDetalleController = require('../db/controllers/TipoDetalleController')
 const PersonaController = require('../db/controllers/PersonaController')
+const ProveedorController = require('../db/controllers/ProveedorController')
+const ProductoController = require('../db/controllers/ProductoController')
+const MovimientoController = require('../db/controllers/MovimientoController')
 
 
 const router = require('express').Router()
@@ -250,13 +253,109 @@ const routes = [
     handler: PersonaController.Delete,
     protected: true,
   },
+
+  //Proveedor
+  {
+    path: '/proveedor/',
+    method: 'post',
+    handler: ProveedorController.create,
+    protected: true,
+  },
+  {
+    path: '/proveedor/',
+    method: 'get',
+    handler: ProveedorController.getAll,
+    protected: true,
+  },
+  {
+    path: '/proveedor/:id',
+    method: 'get',
+    handler: ProveedorController.getById,
+    protected: true,
+  },
+  {
+    path: '/proveedor/:id',
+    method: 'patch',
+    handler: ProveedorController.Update,
+    protected: true,
+  },
+  {
+    path: '/proveedor/:id',
+    method: 'delete',
+    handler: ProveedorController.Delete,
+    protected: true,
+  },
+
+  //Producto
+  {
+    path: '/producto/',
+    method: 'post',
+    handler: ProductoController.create,
+    protected: true,
+  },
+  {
+    path: '/producto/',
+    method: 'get',
+    handler: ProductoController.getAll,
+    protected: true,
+  },
+  {
+    path: '/producto/:id',
+    method: 'get',
+    handler: ProductoController.getById,
+    protected: true,
+  },
+  {
+    path: '/producto/:id',
+    method: 'patch',
+    handler: ProductoController.Update,
+    protected: true,
+  },
+  {
+    path: '/producto/:id',
+    method: 'delete',
+    handler: ProductoController.Delete,
+    protected: true,
+  },
+
+  //Movimiento
+  {
+    path: '/movimiento/',
+    method: 'post',
+    handler: MovimientoController.create,
+    protected: true,
+  },
+  {
+    path: '/movimiento/',
+    method: 'get',
+    handler: MovimientoController.getAll,
+    protected: true,
+  },
+  {
+    path: '/movimiento/:id',
+    method: 'get',
+    handler: MovimientoController.getById,
+    protected: true,
+  },
+  {
+    path: '/movimiento/:id',
+    method: 'patch',
+    handler: MovimientoController.Update,
+    protected: true,
+  },
+  {
+    path: '/movimiento/:id',
+    method: 'delete',
+    handler: MovimientoController.Delete,
+    protected: true,
+  },
 ]
 
 routes.forEach((route) => {
 
   if (route.protected) {
     return router.route(route.path)[route.method](
-      // AuthController.authentication, AuthController.restrictTo(1),
+      AuthController.authentication, AuthController.restrictTo(1),
       route?.handler)
   }
   return router.route(route.path)[route.method](route.handler)

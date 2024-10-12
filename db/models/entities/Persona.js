@@ -8,8 +8,8 @@ class Persona extends Model {
 
   static associate(models) {
     this.belongsTo(models.TipoDetalle,{
-      foreignKey:'rol',
-      as:'persona_detalle'
+      foreignKey:'tipo_documento',
+      as:'persona_tipo_documento'
     }),
     this.belongsTo(models.Ciudad,{
       foreignKey:'id_ciudad',
@@ -39,6 +39,16 @@ const PersonaSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
+  tipo_documento: {
+    type: DataTypes.INTEGER,
+    References:{
+      model:'TipoDetalle',
+      foreignKey:'tipo_documento'
+    }
+  },
+  documento: {
+    type: DataTypes.STRING
+  },
   primer_nombre: {
     type: DataTypes.STRING
   },
@@ -60,13 +70,13 @@ const PersonaSchema = {
   direccion: {
     type: DataTypes.STRING
   },
-  rol: {
-    type: DataTypes.INTEGER,
-    References:{
-      model:'TipoDetalle',
-      key:'id'
-    }
-  },
+  // rol: {
+  //   type: DataTypes.INTEGER,
+  //   References:{
+  //     model:'TipoDetalle',
+  //     key:'id'
+  //   }
+  // },
   id_ciudad: {
     type: DataTypes.INTEGER,
     References:{

@@ -13,8 +13,8 @@ class TipoDetalle extends Model {
      }),
 
      this.hasOne(models.Persona,{
-      foreignKey:'rol',
-      as:'persona_detalle'
+      foreignKey:'tipo_documento',
+      as:'persona_tipo_documento'
     }),
 
     this.hasOne(models.Movimiento,{
