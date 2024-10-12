@@ -3,6 +3,10 @@ const PaisController = require('../db/controllers/PaisController')
 const EstadoController = require('../db/controllers/EstadoController')
 const CiudadController = require('../db/controllers/CiudadController')
 const CategoriaController = require('../db/controllers/CategoriaController')
+const TipoController = require('../db/controllers/TipoController')
+const TipoDetalleController = require('../db/controllers/TipoDetalleController')
+const PersonaController = require('../db/controllers/PersonaController')
+
 
 const router = require('express').Router()
 
@@ -150,13 +154,109 @@ const routes = [
     handler: CategoriaController.Delete,
     protected: true,
   },
+
+  //Tipo
+  {
+    path: '/tipo/',
+    method: 'post',
+    handler: TipoController.create,
+    protected: true,
+  },
+  {
+    path: '/tipo/',
+    method: 'get',
+    handler: TipoController.getAll,
+    protected: true,
+  },
+  {
+    path: '/tipo/:id',
+    method: 'get',
+    handler: TipoController.getById,
+    protected: true,
+  },
+  {
+    path: '/tipo/:id',
+    method: 'patch',
+    handler: TipoController.Update,
+    protected: true,
+  },
+  {
+    path: '/tipo/:id',
+    method: 'delete',
+    handler: TipoController.Delete,
+    protected: true,
+  },
+
+  //TipoDetalle
+  {
+    path: '/tipo-detalle/',
+    method: 'post',
+    handler: TipoDetalleController.create,
+    protected: true,
+  },
+  {
+    path: '/tipo-detalle/',
+    method: 'get',
+    handler: TipoDetalleController.getAll,
+    protected: true,
+  },
+  {
+    path: '/tipo-detalle/:id',
+    method: 'get',
+    handler: TipoDetalleController.getById,
+    protected: true,
+  },
+  {
+    path: '/tipo-detalle/:id',
+    method: 'patch',
+    handler: TipoDetalleController.Update,
+    protected: true,
+  },
+  {
+    path: '/tipo-detalle/:id',
+    method: 'delete',
+    handler: TipoDetalleController.Delete,
+    protected: true,
+  },
+
+  //Persona
+  {
+    path: '/persona/',
+    method: 'post',
+    handler: PersonaController.create,
+    protected: true,
+  },
+  {
+    path: '/persona/',
+    method: 'get',
+    handler: PersonaController.getAll,
+    protected: true,
+  },
+  {
+    path: '/persona/:id',
+    method: 'get',
+    handler: PersonaController.getById,
+    protected: true,
+  },
+  {
+    path: '/persona/:id',
+    method: 'patch',
+    handler: PersonaController.Update,
+    protected: true,
+  },
+  {
+    path: '/persona/:id',
+    method: 'delete',
+    handler: PersonaController.Delete,
+    protected: true,
+  },
 ]
 
 routes.forEach((route) => {
 
   if (route.protected) {
-   return router.route(route.path)[route.method](
-      AuthController.authentication, AuthController.restrictTo(1),
+    return router.route(route.path)[route.method](
+      // AuthController.authentication, AuthController.restrictTo(1),
       route?.handler)
   }
   return router.route(route.path)[route.method](route.handler)

@@ -48,6 +48,9 @@ const PersonaSchema = {
   primer_apellido: {
     type: DataTypes.STRING
   },
+  segundo_apellido: {
+    type: DataTypes.STRING
+  },
   email: {
     type: DataTypes.STRING
   },
