@@ -36,7 +36,24 @@ class PaisController {
       const response = await models.Pais.findAll({
         attributes: {
           exclude: ['updatedAt', 'deletedAt']
-        }
+        },
+        include:
+          [
+            {
+              model: models.Estado,
+              as: 'pais_estado',
+              attributes: ['nombre'],
+              include:
+                [
+                  {
+                    model: models.Ciudad,
+                    as: 'ciudad_estado',
+                    attributes: ['nombre']
+                  }
+                ]
+            },
+
+          ],
       })
 
       return res.status(200).json({
@@ -55,7 +72,24 @@ class PaisController {
       const response = await models.Pais.findByPk(id, {
         attributes: {
           exclude: ['updatedAt', 'deletedAt']
-        }
+        },
+        include:
+          [
+            {
+              model: models.Estado,
+              as: 'pais_estado',
+              attributes: ['nombre'],
+              include:
+                [
+                  {
+                    model: models.Ciudad,
+                    as: 'ciudad_estado',
+                    attributes: ['nombre']
+                  }
+                ]
+            },
+
+          ],
       })
 
       if (!response) {
