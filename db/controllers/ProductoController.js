@@ -14,18 +14,18 @@ class ProductoController {
       const transaction = await sequelize.transaction();
 
       const Producto = await models.Producto.create({
-        codigo: req.body.codigo, 
-        nombre: req.body.nombre, 
-        descripcion: req.body.descripcion, 
-        id_categoria: req.body.id_categoria, 
-        id_proveedor: req.body.id_proveedor, 
-        precio_entrada: req.body.precio_entrada 
+        codigo: req.body.codigo,
+        nombre: req.body.nombre,
+        descripcion: req.body.descripcion,
+        id_categoria: req.body.id_categoria,
+        id_proveedor: req.body.id_proveedor,
+        precio_entrada: req.body.precio_entrada
       }, { transaction })
 
       const Movimiento = await models.Movimiento.create({
         tipo_movimiento: 1,
-        descripcion: 'Movimiento de Entrada',
-        fecha: req.body.fecha,     
+        descripcion: `Entrada de producto: ${req.body.nombre}`,
+        fecha: req.body.fecha,
         id_persona: req.usuario.id
       }, { transaction })
 

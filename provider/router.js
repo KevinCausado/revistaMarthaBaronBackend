@@ -322,9 +322,15 @@ const routes = [
 
   //Movimiento
   {
-    path: '/movimiento/',
+    path: '/movimiento-entrada/',
     method: 'post',
-    handler: MovimientoController.create,
+    handler: MovimientoController.createEntrada,
+    protected: true,
+  },
+  {
+    path: '/movimiento-salida/',
+    method: 'post',
+    handler: MovimientoController.createSalida,
     protected: true,
   },
   {

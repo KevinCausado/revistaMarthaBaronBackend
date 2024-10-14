@@ -3,7 +3,55 @@ const { sequelize, models } = require('../../config/sequelize')
 
 class MovimientoController {
 
-  static async create(req, res, next) {
+  static async createEntrada(req, res, next) {
+    try {
+      const Producto = await models.Producto.findOne({ where: { id: req.body.id_producto } })
+
+      if (!Producto) {
+        return next(new AppError('El producto no existe', 404))
+      }
+
+      const transaction = await sequelize.transaction();
+
+      const Movimiento = await models.Movimiento.create({
+        tipo_movimiento: 1,
+        descripcion: `Entrada de producto: ${Producto.nombre}`,
+        fecha: req.body.fecha,
+        id_persona: req.usuario.id
+      }, { transaction })
+
+
+      Producto.precio_entrada = req.body.precio_entrada
+      await Producto.save()      
+
+      await models.MovimientoDetalle.create({
+        id_movimiento: Movimiento.id,
+        id_producto: req.body.id_producto,
+        cantidad: req.body.cantidad,
+        precio_entrada_unitario: Producto.precio_entrada,
+        porcentaje_ganancia: 0,
+        precio_salida_unitario: 0,
+        total: Producto.precio_entrada * req.body.cantidad
+      }, { transaction })
+
+      await transaction.commit()
+
+      const response = Movimiento.toJSON()
+      delete response.updatedAt
+      delete response.deletedAt
+
+      return res.status(200).json({
+        status: 'Success',
+        message: 'Registro creado',
+        data: response
+      })
+    } catch (error) {
+      return next(new AppError(error.message, error.statusCode))
+    }
+
+  }
+
+  static async createSalida(req, res, next) {
     try {
       const Producto = await models.Producto.findOne({ where: { id: req.body.id_producto } })
 
