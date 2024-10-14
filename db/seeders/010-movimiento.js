@@ -6,8 +6,7 @@ module.exports = {
       {
         tipo_movimiento: 1,
         descripcion: "Movimiento 1(Entrada)",
-        fecha: new Date(),
-        id_proveedor: 1,
+        fecha: new Date(),        
         id_persona: 1,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -15,8 +14,7 @@ module.exports = {
       {
         tipo_movimiento: 2,
         descripcion: "Movimiento 2(Salida)",
-        fecha: new Date(),
-        id_proveedor: 1,
+        fecha: new Date(),        
         id_persona: 1,
         createdAt: new Date(),
         updatedAt: new Date()

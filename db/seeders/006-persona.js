@@ -17,6 +17,20 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        tipo_documento: 3,
+        documento: "50852160",
+        primer_nombre: "Martha",
+        segundo_nombre: "Cecilia",
+        primer_apellido: "Barón",
+        segundo_apellido: "Lenes",
+        email: "marthabaron@gmail.com",
+        telefono: "3126289677",
+        direccion: "Cra 41G No.113-125, Torre 22 Apto 504, Conjunto Gorrion, Alameda del Rio",        
+        id_ciudad: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
      
     ], {});
   },

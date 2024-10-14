@@ -15,11 +15,7 @@ class Movimiento extends Model {
       this.hasOne(models.MovimientoDetalle, {
         foreignKey: 'id_movimiento',
         as: 'movimiento_detalle'
-      }),
-      this.belongsTo(models.Proveedor, {
-        foreignKey: 'id_proveedor',
-        as: 'movimiento_proveedor'
-      }),
+      }),      
       this.belongsTo(models.Persona, {
         foreignKey: 'id_persona',
         as: 'movimiento_persona'
@@ -71,25 +67,6 @@ const MovimientoSchema = {
     allowNull: false,
     notEmpty: true,
     type: DataTypes.DATE,
-    validate: {
-      emptyField(value) {
-        if (this.isnewRecord || value !== undefined) {
-          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
-          if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
-          }
-        }
-      }
-    }
-  },
-  id_proveedor: {
-    allowNull: false,
-    notEmpty: true,
-    type: DataTypes.INTEGER,
-    References: {
-      model: 'Proveedor',
-      key: 'id'
-    },
     validate: {
       emptyField(value) {
         if (this.isnewRecord || value !== undefined) {

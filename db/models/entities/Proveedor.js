@@ -15,10 +15,6 @@ class Proveedor extends Model {
       this.belongsTo(models.Ciudad, {
         foreignKey: 'id_ciudad',
         as: 'proveedor_ciudad'
-      }),
-      this.hasMany(models.Movimiento, {
-        foreignKey: 'id_proveedor',
-        as: 'movimiento_proveedor'
       })
   }
 
@@ -50,7 +46,7 @@ const ProveedorSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -59,13 +55,13 @@ const ProveedorSchema = {
   tipo_servicio: {
     allowNull: false,
     notEmpty: true,
-    type: DataTypes.ENUM('VIRTUAL','PRESENCIAL','AMBAS'),
+    type: DataTypes.ENUM('VIRTUAL', 'PRESENCIAL', 'AMBAS'),
     validate: {
       emptyField(value) {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -80,7 +76,7 @@ const ProveedorSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -94,7 +90,7 @@ const ProveedorSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -109,7 +105,7 @@ const ProveedorSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -124,7 +120,7 @@ const ProveedorSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -143,7 +139,7 @@ const ProveedorSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }

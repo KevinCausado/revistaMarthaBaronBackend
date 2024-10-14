@@ -4,7 +4,7 @@ const initModels = require('../db/models/initModels')
 const sequelize = new Sequelize(config[process.env.NODE_ENV])
 
 // Sincronizando Modelos
-initModels(sequelize)
+const models = initModels(sequelize)
 sequelize.sync()
 
-module.exports = sequelize
+module.exports = { sequelize, models }

@@ -1,25 +1,40 @@
 const AppError = require('../../utils/AppError')
-const { models } = require('../../config/sequelize')
+const { sequelize, models } = require('../../config/sequelize')
 
 class MovimientoController {
 
   static async create(req, res, next) {
     try {
-      // let response = await models.Movimiento.findOne({ where: { codigo: req.body.codigo } })
+      const Producto = await models.Producto.findOne({ where: { id: req.body.id_producto } })
 
-      // if (response) {
-      //   return next(new AppError('El registro existe', 409))
-      // }
+      if (!Producto) {
+        return next(new AppError('El producto no existe', 404))
+      }
 
-      let response = await models.Movimiento.create({
-        tipo_movimiento: req.body.tipo_movimiento,
-        descripcion: req.body.descripcion,
+      const transaction = await sequelize.transaction();
+
+      const Movimiento = await models.Movimiento.create({
+        tipo_movimiento: 2,
+        descripcion: `Salida de producto: ${Producto.nombre}`,
         fecha: req.body.fecha,
-        id_proveedor: req.body.id_proveedor,
         id_persona: req.body.id_persona
-      })
+      }, { transaction })
 
-      response = response.toJSON()
+      const precio_salida_unitario = Producto.precio_entrada + (Producto.precio_entrada * (req.body.porcentaje_ganancia / 100))
+
+      await models.MovimientoDetalle.create({
+        id_movimiento: Movimiento.id,
+        id_producto: req.body.id_producto,
+        cantidad: req.body.cantidad,
+        precio_entrada_unitario: Producto.precio_entrada,
+        porcentaje_ganancia: req.body.porcentaje_ganancia,
+        precio_salida_unitario: precio_salida_unitario,
+        total: precio_salida_unitario * req.body.cantidad
+      }, { transaction })
+
+      await transaction.commit()
+
+      const response = Movimiento.toJSON()
       delete response.updatedAt
       delete response.deletedAt
 
@@ -101,10 +116,9 @@ class MovimientoController {
       }
 
       response.tipo_movimiento = req.body.tipo_movimiento,
-      response.descripcion = req.body.descripcion,
-      response.fecha = req.body.fecha,
-      response.id_proveedor = req.body.id_proveedor,
-      response.id_persona = req.body.id_persona
+        response.descripcion = req.body.descripcion,
+        response.fecha = req.body.fecha,
+        response.id_persona = req.body.id_persona
 
       await response.save()
 

@@ -1,5 +1,5 @@
 const AppError = require('../../utils/AppError')
-const { models } = require('../../config/sequelize')
+const { sequelize, models } = require('../../config/sequelize')
 
 class ProductoController {
 
@@ -11,16 +11,40 @@ class ProductoController {
         return next(new AppError('El registro existe', 409))
       }
 
-      response = await models.Producto.create({
-        codigo: req.body.codigo,
-        nombre: req.body.nombre,
-        descripcion: req.body.descripcion,
-        id_categoria: req.body.id_categoria,
-        id_proveedor: req.body.id_proveedor,
-        precio_entrada: req.body.precio_entrada
-      })
+      const transaction = await sequelize.transaction();
 
-      response = response.toJSON()
+      const Producto = await models.Producto.create({
+        codigo: req.body.codigo, 
+        nombre: req.body.nombre, 
+        descripcion: req.body.descripcion, 
+        id_categoria: req.body.id_categoria, 
+        id_proveedor: req.body.id_proveedor, 
+        precio_entrada: req.body.precio_entrada 
+      }, { transaction })
+
+      const Movimiento = await models.Movimiento.create({
+        tipo_movimiento: 1,
+        descripcion: 'Movimiento de Entrada',
+        fecha: req.body.fecha,     
+        id_persona: req.usuario.id
+      }, { transaction })
+
+
+      await models.MovimientoDetalle.create({
+        id_movimiento: Movimiento.id,
+        id_producto: Producto.id,
+        cantidad: req.body.cantidad,
+        precio_entrada_unitario: Producto.precio_entrada,
+        porcentaje_ganancia: 0,
+        precio_salida_unitario: 0,
+        total: Producto.precio_entrada * req.body.cantidad
+      }, { transaction })
+
+      // console.log(req.body)
+
+      await transaction.commit()
+
+      response = Producto.toJSON()
       delete response.updatedAt
       delete response.deletedAt
 
@@ -37,6 +61,8 @@ class ProductoController {
 
       // Manejar otros errores
       return next(new AppError('Error interno del servidor', 500));
+
+      // return next(new AppError(error.message, error.statusCode))
     }
 
   }
@@ -107,12 +133,12 @@ class ProductoController {
         return next(new AppError('El registro no existe', 404))
       }
 
-       response.codigo = req.body.codigo,
-       response.nombre = req.body.nombre,
-       response.descripcion = req.body.descripcion,
-       response.id_categoria = req.body.id_categoria,
-       response.id_proveedor = req.body.id_proveedor,
-       response.precio_entrada = req.body.precio_entrada
+      response.codigo = req.body.codigo,
+        response.nombre = req.body.nombre,
+        response.descripcion = req.body.descripcion,
+        response.id_categoria = req.body.id_categoria,
+        response.id_proveedor = req.body.id_proveedor,
+        response.precio_entrada = req.body.precio_entrada
 
       await response.save()
 
