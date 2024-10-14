@@ -20,8 +20,7 @@ class PersonaController {
         segundo_apellido: req.body.segundo_apellido,
         email: req.body.email,
         telefono: req.body.telefono,
-        direccion: req.body.direccion,
-        rol: req.body.rol,
+        direccion: req.body.direccion,        
         id_ciudad: req.body.id_ciudad
       })
 
@@ -120,8 +119,7 @@ class PersonaController {
         response.segundo_apellido = req.body.segundo_apellido,
         response.email = req.body.email,
         response.telefono = req.body.telefono,
-        response.direccion = req.body.direccion,
-        response.rol = req.body.rol,
+        response.direccion = req.body.direccion,        
         response.id_ciudad = req.body.id_ciudad
 
       await response.save()
