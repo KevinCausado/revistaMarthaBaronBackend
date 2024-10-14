@@ -3,6 +3,7 @@ const {
   Model,
   DataTypes
 } = require('sequelize');
+const AppError = require('../../../utils/AppError');
 
 class Estado extends Model {
 
@@ -50,7 +51,7 @@ const EstadoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -65,7 +66,7 @@ const EstadoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }

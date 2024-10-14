@@ -17,11 +17,13 @@ class AuthController {
       const usuario = req.body.usuario
       const contrasena = req.body.contrasena
       const confirmarContrasena = req.body.confirmarContrasena
+      const id_persona = req.body.id_persona
 
       const response = await models.Usuario.create({
         usuario: usuario,
         contrasena: contrasena,
         confirmarContrasena: confirmarContrasena,
+        id_persona: id_persona
       })
 
       const result = await response.toJSON()

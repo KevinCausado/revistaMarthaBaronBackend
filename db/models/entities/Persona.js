@@ -3,14 +3,19 @@ const {
   Model,
   DataTypes
 } = require('sequelize');
+const AppError = require('../../../utils/AppError');
 
 class Persona extends Model {
 
   static associate(models) {
-    this.belongsTo(models.TipoDetalle, {
-      foreignKey: 'tipo_documento',
-      as: 'persona_tipo_documento'
+    this.hasOne(models.Usuario, {
+      foreignKey: 'id_persona',
+      as: 'persona_usuario'
     }),
+      this.belongsTo(models.TipoDetalle, {
+        foreignKey: 'tipo_documento',
+        as: 'persona_tipo_documento'
+      }),
       this.belongsTo(models.Ciudad, {
         foreignKey: 'id_ciudad',
         as: 'persona_ciudad'
@@ -52,7 +57,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -67,7 +72,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -82,7 +87,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -101,7 +106,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -116,7 +121,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -131,7 +136,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -146,7 +151,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -161,7 +166,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }
@@ -187,7 +192,7 @@ const PersonaSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
         }
       }

@@ -9,10 +9,11 @@ const bcrypt = require('bcrypt')
 class Usuario extends Model {
 
   static associate(models) {
-    //  this.belongsTo(models.Persona,{
-    //   foreignKey:'id_tipo',
-    //   as:'tipo_detalle'
-    //  })
+    this.belongsTo(models.Persona, {
+      foreignKey: 'id_persona',
+      as: 'persona_usuario',
+      allowNull:true
+    })
   }
 
   static config(sequelize) {
@@ -58,6 +59,14 @@ const UsuarioSchema = {
     allowNull: false,
     notEmpty: true,
     type: DataTypes.VIRTUAL,
+  },
+  id_persona: {
+    allowNull: true,    
+    type: DataTypes.INTEGER,
+    References: {
+      model: 'Persona',
+      key: 'id'
+    }
   },
   createdAt: {
     allowNull: false,

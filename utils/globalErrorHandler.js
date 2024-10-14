@@ -14,9 +14,9 @@ const sendErrorDev = (err, res) => {
     })
   }
 
-  return res.status(statusCode).json({
-    status: status,
-    message: message,
+  return res.status(500).json({
+    status: 'Fatal Server Error',
+    message: 'Algo salio mal',
     stack:stack
   })
 }

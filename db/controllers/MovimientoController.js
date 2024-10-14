@@ -47,7 +47,13 @@ class MovimientoController {
         data: response
       })
     } catch (error) {
-      return next(new AppError(error.message, error.statusCode))
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }
+
+      // Manejar otros errores
+      return next(new AppError('Error interno del servidor', 500));
     }
 
   }
@@ -70,7 +76,13 @@ class MovimientoController {
         data: response
       })
     } catch (error) {
-      return next(new AppError(error.message, error.statusCode))
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }
+
+      // Manejar otros errores
+      return next(new AppError('Error interno del servidor', 500));
     }
 
   }
@@ -102,7 +114,13 @@ class MovimientoController {
         data: response
       })
     } catch (error) {
-      return next(new AppError(error.message, error.statusCode))
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }
+
+      // Manejar otros errores
+      return next(new AppError('Error interno del servidor', 500));
     }
 
   }
@@ -124,7 +142,13 @@ class MovimientoController {
         message: 'Registro eliminado'
       })
     } catch (error) {
-      return next(new AppError(error.message, error.statusCode))
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }
+
+      // Manejar otros errores
+      return next(new AppError('Error interno del servidor', 500));
     }
 
   }
