@@ -7,10 +7,10 @@ const {
 class Tipo extends Model {
 
   static associate(models) {
-     this.hasMany(models.TipoDetalle,{
-      foreignKey:'id_tipo',
-      as:'tipo_detalle'
-     })
+    this.hasMany(models.TipoDetalle, {
+      foreignKey: 'id_tipo',
+      as: 'tipo_detalle'
+    })
   }
 
   static config(sequelize) {
@@ -33,8 +33,20 @@ const TipoSchema = {
     type: DataTypes.INTEGER
   },
   nombre: {
-    type: DataTypes.STRING
-  }, 
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

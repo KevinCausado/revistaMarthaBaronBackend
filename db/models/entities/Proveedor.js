@@ -7,18 +7,18 @@ const {
 class Proveedor extends Model {
 
   static associate(models) {
-    this.hasMany(models.Producto,{
-      foreignKey:'id_proveedor',
-      as:'producto_proveedor'
+    this.hasMany(models.Producto, {
+      foreignKey: 'id_proveedor',
+      as: 'producto_proveedor'
     }),
-    this.belongsTo(models.Ciudad,{
-      foreignKey:'id_ciudad',
-      as:'proveedor_ciudad'
-    }),
-    this.hasMany(models.Movimiento,{
-      foreignKey:'id_proveedor',
-      as:'movimiento_proveedor'
-     })    
+      this.belongsTo(models.Ciudad, {
+        foreignKey: 'id_ciudad',
+        as: 'proveedor_ciudad'
+      }),
+      this.hasMany(models.Movimiento, {
+        foreignKey: 'id_proveedor',
+        as: 'movimiento_proveedor'
+      })
   }
 
   static config(sequelize) {
@@ -41,34 +41,113 @@ const ProveedorSchema = {
     type: DataTypes.INTEGER
   },
   codigo: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   tipo_servicio: {
-    type: DataTypes.INTEGER,
-    References:{
-      model:'TipoDetalle',
-      key:'id'
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.ENUM('VIRTUAL','PRESENCIAL','AMBAS'),
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   nombre: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   direccion: {
-    type: DataTypes.TEXT
+    allowNull: false,
+    type: DataTypes.TEXT,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   email: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   telefono: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   id_ciudad: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Ciudad',
-      key:'id'
+    References: {
+      model: 'Ciudad',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
-  },  
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

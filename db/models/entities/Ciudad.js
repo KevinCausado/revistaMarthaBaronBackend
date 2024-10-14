@@ -7,20 +7,20 @@ const {
 class Ciudad extends Model {
 
   static associate(models) {
-    this.belongsTo(models.Estado,{
-      foreignKey:'id_estado',
-      as:'ciudad_estado'
+    this.belongsTo(models.Estado, {
+      foreignKey: 'id_estado',
+      as: 'ciudad_estado'
     }),
 
-    this.hasMany(models.Persona,{
-      foreignKey:'id_ciudad',
-      as:'persona_ciudad'
-    }),
+      this.hasMany(models.Persona, {
+        foreignKey: 'id_ciudad',
+        as: 'persona_ciudad'
+      }),
 
-    this.hasMany(models.Proveedor,{
-      foreignKey:'id_ciudad',
-      as:'proveedor_ciudad'
-    })
+      this.hasMany(models.Proveedor, {
+        foreignKey: 'id_ciudad',
+        as: 'proveedor_ciudad'
+      })
   }
 
   static config(sequelize) {
@@ -43,10 +43,34 @@ const CiudadSchema = {
     type: DataTypes.INTEGER
   },
   id_estado: {
-    type: DataTypes.INTEGER
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.INTEGER,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   nombre: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   createdAt: {
     allowNull: false,
@@ -56,7 +80,7 @@ const CiudadSchema = {
     allowNull: false,
     type: DataTypes.DATE
   },
-  deletedAt: {        
+  deletedAt: {
     type: DataTypes.DATE
   }
 }

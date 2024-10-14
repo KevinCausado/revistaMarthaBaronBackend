@@ -7,15 +7,15 @@ const {
 class Estado extends Model {
 
   static associate(models) {
-    this.hasMany(models.Ciudad,{
-      foreignKey:'id_estado',
-      as:'ciudad_estado'
+    this.hasMany(models.Ciudad, {
+      foreignKey: 'id_estado',
+      as: 'ciudad_estado'
     }),
 
-    this.belongsTo(models.Pais,{
-      foreignKey:'id_pais',
-      as:'pais_estado'
-    })   
+      this.belongsTo(models.Pais, {
+        foreignKey: 'id_pais',
+        as: 'pais_estado'
+      })
   }
 
   static config(sequelize) {
@@ -24,7 +24,7 @@ class Estado extends Model {
       modelName: 'Estado',
       tableName: 'estado',
       schema: process.env.DB_SCHEMA,
-      paranoid:true
+      paranoid: true
     }
   }
 }
@@ -38,14 +38,38 @@ const EstadoSchema = {
     type: DataTypes.INTEGER
   },
   id_pais: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Pais',
-      key:'id'
+    References: {
+      model: 'Pais',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   nombre: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   createdAt: {
     allowNull: false,
@@ -55,7 +79,7 @@ const EstadoSchema = {
     allowNull: false,
     type: DataTypes.DATE
   },
-  deletedAt: {    
+  deletedAt: {
     type: DataTypes.DATE
   }
 }

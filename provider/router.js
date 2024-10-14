@@ -9,6 +9,8 @@ const PersonaController = require('../db/controllers/PersonaController')
 const ProveedorController = require('../db/controllers/ProveedorController')
 const ProductoController = require('../db/controllers/ProductoController')
 const MovimientoController = require('../db/controllers/MovimientoController')
+const MovimientoDetalleController = require('../db/controllers/MovimientoDetalleController')
+const InventarioController = require('../db/controllers/InventarioController')
 
 
 const router = require('express').Router()
@@ -349,6 +351,71 @@ const routes = [
     handler: MovimientoController.Delete,
     protected: true,
   },
+
+  //MovimientoDetalle
+  {
+    path: '/movimiento-detalle/',
+    method: 'post',
+    handler: MovimientoDetalleController.create,
+    protected: true,
+  },
+  {
+    path: '/movimiento-detalle/',
+    method: 'get',
+    handler: MovimientoDetalleController.getAll,
+    protected: true,
+  },
+  {
+    path: '/movimiento-detalle/:id',
+    method: 'get',
+    handler: MovimientoDetalleController.getById,
+    protected: true,
+  },
+  {
+    path: '/movimiento-detalle/:id',
+    method: 'patch',
+    handler: MovimientoDetalleController.Update,
+    protected: true,
+  },
+  {
+    path: '/movimiento-detalle/:id',
+    method: 'delete',
+    handler: MovimientoDetalleController.Delete,
+    protected: true,
+  },
+
+  //Inventario
+  {
+    path: '/inventario/',
+    method: 'post',
+    handler: InventarioController.create,
+    protected: true,
+  },
+  {
+    path: '/inventario/',
+    method: 'get',
+    handler: InventarioController.getAll,
+    protected: true,
+  },
+  {
+    path: '/inventario/:id',
+    method: 'get',
+    handler: InventarioController.getById,
+    protected: true,
+  },
+  {
+    path: '/inventario/:id',
+    method: 'patch',
+    handler: InventarioController.Update,
+    protected: true,
+  },
+  {
+    path: '/inventario/:id',
+    method: 'delete',
+    handler: InventarioController.Delete,
+    protected: true,
+  },
+
 ]
 
 routes.forEach((route) => {

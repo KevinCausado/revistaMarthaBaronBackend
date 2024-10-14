@@ -5,11 +5,11 @@ const {
 } = require('sequelize');
 
 class Inventario extends Model {
-  
+
   static associate(models) {
-    this.belongsTo(models.Producto,{
-      foreignKey:'id_producto',
-      as:'inventario_producto'
+    this.belongsTo(models.Producto, {
+      foreignKey: 'id_producto',
+      as: 'inventario_producto'
     })
   }
 
@@ -32,10 +32,34 @@ const InventarioSchema = {
     type: DataTypes.INTEGER
   },
   id_producto: {
-    type: DataTypes.INTEGER
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.INTEGER,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   cantidad: {
-    type: DataTypes.INTEGER
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.INTEGER,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   createdAt: {
     allowNull: false,
@@ -51,4 +75,4 @@ const InventarioSchema = {
   }
 }
 
-module.exports = {Inventario,InventarioSchema}
+module.exports = { Inventario, InventarioSchema }

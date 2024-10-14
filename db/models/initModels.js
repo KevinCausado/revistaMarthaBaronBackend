@@ -8,9 +8,9 @@ const { Ciudad, CiudadSchema } = require('./entities/Ciudad') // OK
 const { Categoria, CategoriaSchema } = require('./entities/Categoria') // OK
 const {Proveedor,ProveedorSchema} = require('./entities/Proveedor') // OK
 const {Producto,ProductoSchema} = require('./entities/Producto') // OK
-const {Movimiento,MovimientoSchema} = require('./entities/Movimiento')
-const {MovimientoDetalle,MovimientoDetalleSchema} = require('./entities/MovimientoDetalle')
-const {Inventario,InventarioSchema} = require('./entities/Inventario')
+const {Movimiento,MovimientoSchema} = require('./entities/Movimiento') // OK
+const {MovimientoDetalle,MovimientoDetalleSchema} = require('./entities/MovimientoDetalle') // OK
+const {Inventario,InventarioSchema} = require('./entities/Inventario') // OK
 
 
 const initModels = (sequelize) => {

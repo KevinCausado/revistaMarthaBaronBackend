@@ -7,14 +7,14 @@ const {
 class MovimientoDetalle extends Model {
 
   static associate(models) {
-     this.belongsTo(models.Movimiento,{
-      foreignKey:'id_movimiento',
-      as:'movimiento_detalle'
-     }),
-     this.belongsTo(models.Producto,{
-      foreignKey:'id_producto',
-      as:'movimiento_detalle_producto'
-     })
+    this.belongsTo(models.Movimiento, {
+      foreignKey: 'id_movimiento',
+      as: 'movimiento_detalle'
+    }),
+      this.belongsTo(models.Producto, {
+        foreignKey: 'id_producto',
+        as: 'movimiento_detalle_producto'
+      })
   }
 
   static config(sequelize) {
@@ -36,29 +36,120 @@ const MovimientoDetalleSchema = {
     type: DataTypes.INTEGER
   },
   id_movimiento: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Movimiento',
-      key:'id'
+    References: {
+      model: 'Movimiento',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   id_producto: {
-    type: DataTypes.INTEGER
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.INTEGER,
+    References: {
+      model: 'Producto',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   cantidad: {
-    type: DataTypes.INTEGER
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.INTEGER,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   precio_entrada_unitario: {
-    type: DataTypes.DOUBLE
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.DOUBLE,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   porcentaje_ganancia: {
-    type: DataTypes.INTEGER
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.INTEGER,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+          if (value < 0 || value > 100) {
+            throw new Error(`Campo "${fieldName}": El porcentaje debe estar entre 0 y 100.`);
+          }
+        }
+      },      
+    }
   },
   precio_salida_unitario: {
-    type: DataTypes.DOUBLE
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.DOUBLE,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   total: {
-    type: DataTypes.DOUBLE
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.DOUBLE,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   createdAt: {
     allowNull: false,
@@ -69,7 +160,6 @@ const MovimientoDetalleSchema = {
     type: DataTypes.DATE
   },
   deletedAt: {
-    allowNull: false,
     type: DataTypes.DATE
   }
 

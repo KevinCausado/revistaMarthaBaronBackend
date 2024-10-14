@@ -7,18 +7,18 @@ const {
 class Persona extends Model {
 
   static associate(models) {
-    this.belongsTo(models.TipoDetalle,{
-      foreignKey:'tipo_documento',
-      as:'persona_tipo_documento'
+    this.belongsTo(models.TipoDetalle, {
+      foreignKey: 'tipo_documento',
+      as: 'persona_tipo_documento'
     }),
-    this.belongsTo(models.Ciudad,{
-      foreignKey:'id_ciudad',
-      as:'persona_ciudad'
-    }),
-    this.hasMany(models.Movimiento,{
-      foreignKey:'id_persona',
-      as:'movimiento_persona'
-     })    
+      this.belongsTo(models.Ciudad, {
+        foreignKey: 'id_ciudad',
+        as: 'persona_ciudad'
+      }),
+      this.hasMany(models.Movimiento, {
+        foreignKey: 'id_persona',
+        as: 'movimiento_persona'
+      })
   }
 
   static config(sequelize) {
@@ -27,7 +27,7 @@ class Persona extends Model {
       modelName: 'Persona',
       tableName: 'persona',
       schema: process.env.DB_SCHEMA,
-      paranoid:true
+      paranoid: true
     }
   }
 }
@@ -40,35 +40,132 @@ const PersonaSchema = {
     type: DataTypes.INTEGER
   },
   tipo_documento: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'TipoDetalle',
-      foreignKey:'tipo_documento'
+    References: {
+      model: 'TipoDetalle',
+      foreignKey: 'tipo_documento'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   documento: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   primer_nombre: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   segundo_nombre: {
-    type: DataTypes.STRING
+    allowNull: false,
+    type: DataTypes.STRING,
   },
   primer_apellido: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   segundo_apellido: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   email: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   telefono: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   direccion: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   // rol: {
   //   type: DataTypes.INTEGER,
@@ -78,12 +175,24 @@ const PersonaSchema = {
   //   }
   // },
   id_ciudad: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Ciudad',
-      key:'id'
+    References: {
+      model: 'Ciudad',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
-  },  
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE
@@ -92,7 +201,7 @@ const PersonaSchema = {
     allowNull: false,
     type: DataTypes.DATE
   },
-  deletedAt: {    
+  deletedAt: {
     type: DataTypes.DATE
   }
 }

@@ -7,31 +7,31 @@ const {
 class Movimiento extends Model {
 
   static associate(models) {
-    this.belongsTo(models.TipoDetalle,{
-      foreignKey:'tipo_movimiento',
-      as:'tipo_movimiento_detalle'
+    this.belongsTo(models.TipoDetalle, {
+      foreignKey: 'tipo_movimiento',
+      as: 'tipo_movimiento_detalle'
     }),
-    this.hasOne(models.MovimientoDetalle,{
-      foreignKey:'id_movimiento',
-      as:'movimiento_detalle'
-     }),
-     this.belongsTo(models.Proveedor,{
-      foreignKey:'id_proveedor',
-      as:'movimiento_proveedor'
-     }),
-     this.belongsTo(models.Persona,{
-      foreignKey:'id_persona',
-      as:'movimiento_persona'
-     })
+      this.hasOne(models.MovimientoDetalle, {
+        foreignKey: 'id_movimiento',
+        as: 'movimiento_detalle'
+      }),
+      this.belongsTo(models.Proveedor, {
+        foreignKey: 'id_proveedor',
+        as: 'movimiento_proveedor'
+      }),
+      this.belongsTo(models.Persona, {
+        foreignKey: 'id_persona',
+        as: 'movimiento_persona'
+      })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      modelName:'Movimiento',
-      tableName:'movimiento',
-      schema:process.env.DB_SCHEMA,
-      paranoid:true
+      modelName: 'Movimiento',
+      tableName: 'movimiento',
+      schema: process.env.DB_SCHEMA,
+      paranoid: true
     }
   }
 }
@@ -44,30 +44,79 @@ const MovimientoSchema = {
     type: DataTypes.INTEGER
   },
   tipo_movimiento: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'TipoDetalle',
-      key:'id'
+    References: {
+      model: 'TipoDetalle',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   descripcion: {
+    allowNull: false,
     type: DataTypes.TEXT
   },
   fecha: {
-    type: DataTypes.DATE
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.DATE,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   id_proveedor: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Proveedor',
-      key:'id'
+    References: {
+      model: 'Proveedor',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   id_persona: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Persona',
-      key:'id'
+    References: {
+      model: 'Persona',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   createdAt: {

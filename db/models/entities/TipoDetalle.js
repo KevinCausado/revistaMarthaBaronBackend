@@ -7,20 +7,20 @@ const {
 class TipoDetalle extends Model {
 
   static associate(models) {
-    this.belongsTo(models.Tipo,{
-      foreignKey:'id_tipo',
-      as:'tipo_detalle'
-     }),
-
-     this.hasOne(models.Persona,{
-      foreignKey:'tipo_documento',
-      as:'persona_tipo_documento'
+    this.belongsTo(models.Tipo, {
+      foreignKey: 'id_tipo',
+      as: 'tipo_detalle'
     }),
 
-    this.hasOne(models.Movimiento,{
-      foreignKey:'tipo_movimiento',
-      as:'tipo_movimiento_detalle'
-    })
+      this.hasOne(models.Persona, {
+        foreignKey: 'tipo_documento',
+        as: 'persona_tipo_documento'
+      }),
+
+      this.hasOne(models.Movimiento, {
+        foreignKey: 'tipo_movimiento',
+        as: 'tipo_movimiento_detalle'
+      })
   }
 
   static config(sequelize) {
@@ -43,16 +43,52 @@ const TipoDetalleSchema = {
     type: DataTypes.INTEGER
   },
   codigo: {
-    type: DataTypes.STRING
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.STRING,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   descripcion: {
-    type: DataTypes.TEXT
+    allowNull: false,
+    notEmpty: true,
+    type: DataTypes.TEXT,
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
+    }
   },
   id_tipo: {
+    allowNull: false,
+    notEmpty: true,
     type: DataTypes.INTEGER,
-    References:{
-      model:'Tipo',
-      key:'id'
+    References: {
+      model: 'Tipo',
+      key: 'id'
+    },
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+          }
+        }
+      }
     }
   },
   createdAt: {
