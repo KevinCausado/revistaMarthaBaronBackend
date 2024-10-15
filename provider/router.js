@@ -389,6 +389,12 @@ const routes = [
     handler: MovimientoDetalleController.Delete,
     protected: true,
   },
+  {
+    path: '/get-balance/',
+    method: 'get',
+    handler: MovimientoDetalleController.getBalance,
+    protected: true,
+  },
 
   //Inventario
   {

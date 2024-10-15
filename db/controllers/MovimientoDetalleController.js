@@ -37,7 +37,7 @@ class MovimientoDetalleController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -61,7 +61,7 @@ class MovimientoDetalleController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -90,7 +90,7 @@ class MovimientoDetalleController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -109,12 +109,12 @@ class MovimientoDetalleController {
       }
 
       response.id_movimiento = req.body.id_movimiento,
-      response.id_producto = req.body.id_producto,
-      response.cantidad = req.body.cantidad,
-      response.precio_entrada_unitario = req.body.precio_entrada_unitario,
-      response.porcentaje_ganancia = req.body.porcentaje_ganancia,
-      response.precio_salida_unitario = req.body.precio_salida_unitario,
-      response.total = req.body.total
+        response.id_producto = req.body.id_producto,
+        response.cantidad = req.body.cantidad,
+        response.precio_entrada_unitario = req.body.precio_entrada_unitario,
+        response.porcentaje_ganancia = req.body.porcentaje_ganancia,
+        response.precio_salida_unitario = req.body.precio_salida_unitario,
+        response.total = req.body.total
 
       await response.save()
 
@@ -130,7 +130,7 @@ class MovimientoDetalleController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -158,7 +158,47 @@ class MovimientoDetalleController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
+    }
+
+  }
+
+  static async getBalance(req, res, next) {
+    try {
+
+      const totalEntradas = await models.MovimientoDetalle.sum('total', {
+        include: [{
+          model: models.Movimiento,
+          as: 'movimiento_detalle',
+          attributes: [],
+          where: { tipo_movimiento: 1 }
+        }]
+      })
+
+      const totalSalidas = await models.MovimientoDetalle.sum('total', {
+        include: [{
+          model: models.Movimiento,
+          as: 'movimiento_detalle',
+          attributes: [],
+          where: { tipo_movimiento: 2 }
+        }]
+      })
+
+      const balanceGeneral = totalEntradas - totalSalidas
+
+      return res.status(200).json({
+        status: 'OK',
+        message: 'Balance General',
+        data: { totalEntradas, totalSalidas, balanceGeneral }
+      })
+    } catch (error) {
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }   
+
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }

@@ -40,7 +40,7 @@ class MovimientoController {
       Inventario.id_producto = Producto.id
       Inventario.cantidad = Inventario.cantidad + MovimientoDetalle.cantidad
 
-      await Inventario.save()
+      await Inventario.save({transaction})
 
       await transaction.commit()
 
@@ -54,7 +54,13 @@ class MovimientoController {
         data: response
       })
     } catch (error) {
-      return next(new AppError(error.message, error.statusCode))
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }   
+
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }
@@ -113,7 +119,13 @@ class MovimientoController {
         data: { response, ganancia }
       })
     } catch (error) {
-      return next(new AppError(error.message, error.statusCode))
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }   
+
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }
@@ -134,10 +146,10 @@ class MovimientoController {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
         return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
-      }
+      }   
 
-      // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }
@@ -163,10 +175,10 @@ class MovimientoController {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
         return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
-      }
+      }   
 
-      // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }
@@ -200,10 +212,10 @@ class MovimientoController {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
         return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
-      }
+      }   
 
-      // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }
@@ -228,10 +240,10 @@ class MovimientoController {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
         return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
-      }
+      }   
 
-      // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
+
     }
 
   }

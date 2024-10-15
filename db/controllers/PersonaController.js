@@ -40,7 +40,7 @@ class PersonaController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -64,7 +64,7 @@ class PersonaController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -93,7 +93,7 @@ class PersonaController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -136,7 +136,7 @@ class PersonaController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
@@ -164,7 +164,7 @@ class PersonaController {
       }
 
       // Manejar otros errores
-      return next(new AppError('Error interno del servidor', 500));
+      return next(new AppError(error.message, error.statusCode));
     }
 
   }
