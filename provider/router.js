@@ -395,6 +395,12 @@ const routes = [
     handler: MovimientoDetalleController.getBalance,
     protected: true,
   },
+  {
+    path: '/get-balance-by-product/:id',
+    method: 'get',
+    handler: MovimientoDetalleController.getBalanceByProduct,
+    protected: true,
+  },
 
   //Inventario
   {

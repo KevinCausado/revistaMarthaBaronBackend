@@ -184,7 +184,7 @@ class MovimientoDetalleController {
         }]
       })
 
-      const balanceGeneral = totalEntradas - totalSalidas
+      const balanceGeneral = totalSalidas - totalEntradas
 
       return res.status(200).json({
         status: 'OK',
@@ -195,7 +195,55 @@ class MovimientoDetalleController {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
         return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
-      }   
+      }
+
+      return next(new AppError(error.message, error.statusCode));
+
+    }
+
+  }
+
+  static async getBalanceByProduct(req, res, next) {
+    try {
+      const id_producto = req.params.id
+      const Producto = await models.Producto.findByPk(id_producto)
+
+      if (!Producto) {
+        return next(new AppError('El producto no existe', 400))
+      }
+
+      const totalEntradas = await models.MovimientoDetalle.sum('total', {
+        where:{id_producto:Producto.id},
+        include: [{
+          model: models.Movimiento,
+          as: 'movimiento_detalle',
+          attributes: [],
+          where: { tipo_movimiento: 1 },
+        }]
+      })
+
+      const totalSalidas = await models.MovimientoDetalle.sum('total', {
+        where:{id_producto:Producto.id},
+        include: [{
+          model: models.Movimiento,
+          as: 'movimiento_detalle',
+          attributes: [],
+          where: { tipo_movimiento: 2 },
+        }]
+      })
+
+      const balanceGeneral = totalSalidas - totalEntradas
+
+      return res.status(200).json({
+        status: 'OK',
+        message: `Balance General: ${Producto.nombre}`,
+        data: { totalEntradas, totalSalidas, balanceGeneral }
+      })
+    } catch (error) {
+      if (error.name === 'SequelizeValidationError') {
+        const messages = error.errors.map(e => e.message);
+        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+      }
 
       return next(new AppError(error.message, error.statusCode));
 
