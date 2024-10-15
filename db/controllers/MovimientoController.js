@@ -22,7 +22,7 @@ class MovimientoController {
 
 
       Producto.precio_entrada = req.body.precio_entrada
-      await Producto.save()
+      await Producto.save({transaction})
 
       const MovimientoDetalle = await models.MovimientoDetalle.create({
         id_movimiento: Movimiento.id,
