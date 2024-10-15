@@ -139,6 +139,9 @@ const ProductoSchema = {
           if (value === '') {
             throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
+          if (value < 0 ) {
+            throw new AppError(`Campo "${fieldName}": No puedes colocar valores negativos.`,400);
+          }
         }
       }
     }

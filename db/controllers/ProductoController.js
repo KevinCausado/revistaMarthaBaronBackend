@@ -30,7 +30,7 @@ class ProductoController {
       }, { transaction })
 
 
-      await models.MovimientoDetalle.create({
+      const MovimientoDetalle = await models.MovimientoDetalle.create({
         id_movimiento: Movimiento.id,
         id_producto: Producto.id,
         cantidad: req.body.cantidad,
@@ -41,6 +41,11 @@ class ProductoController {
       }, { transaction })
 
       // console.log(req.body)
+
+      await models.Inventario.create({
+        id_producto: Producto.id,
+        cantidad: MovimientoDetalle.cantidad
+      }, { transaction })
 
       await transaction.commit()
 

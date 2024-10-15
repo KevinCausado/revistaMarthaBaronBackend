@@ -4,6 +4,7 @@ const {
   DataTypes
 } = require('sequelize');
 const AppError = require('../../../utils/AppError');
+const { toDefaultValue } = require('sequelize/lib/utils');
 
 class MovimientoDetalle extends Model {
 
@@ -49,7 +50,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -68,7 +69,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -83,7 +84,10 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+          }
+          if (value < 0) {
+            throw new AppError(`Campo "${fieldName}": No puedes vender productos sin stock.`, 400);
           }
         }
       }
@@ -98,7 +102,10 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+          }
+          if (value < 0) {
+            throw new AppError(`Campo "${fieldName}": No puedes colocar valores negativos.`, 400);
           }
         }
       }
@@ -116,10 +123,10 @@ const MovimientoDetalleSchema = {
             throw new Error(`El campo "${fieldName}" no puede estar vacío`);
           }
           if (value < 0 || value > 100) {
-            throw new AppError(`Campo "${fieldName}": El porcentaje debe estar entre 0 y 100.`,400);
+            throw new AppError(`Campo "${fieldName}": El porcentaje debe estar entre 0 y 100.`, 400);
           }
         }
-      },      
+      },
     }
   },
   precio_salida_unitario: {
@@ -131,7 +138,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -146,12 +153,12 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
     }
-  },
+  },  
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

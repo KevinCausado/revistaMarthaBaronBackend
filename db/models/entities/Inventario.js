@@ -58,6 +58,9 @@ const InventarioSchema = {
           if (value === '') {
             throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
           }
+          if (value < 0 ) {
+            throw new AppError(`Campo "${fieldName}": No puedes vender productos sin stock.`,400);
+          }
         }
       }
     }

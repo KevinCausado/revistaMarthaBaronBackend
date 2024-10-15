@@ -5,6 +5,7 @@ const {
 } = require('sequelize');
 const AppError = require('../../../utils/AppError');
 
+
 class Movimiento extends Model {
 
   static associate(models) {
@@ -15,7 +16,7 @@ class Movimiento extends Model {
       this.hasOne(models.MovimientoDetalle, {
         foreignKey: 'id_movimiento',
         as: 'movimiento_detalle'
-      }),      
+      }),
       this.belongsTo(models.Persona, {
         foreignKey: 'id_persona',
         as: 'movimiento_persona'
@@ -53,7 +54,7 @@ const MovimientoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -72,7 +73,7 @@ const MovimientoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }
@@ -91,7 +92,23 @@ const MovimientoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+          }
+        }
+      }
+    }
+  },
+  ganancia: {
+    allowNull: DataTypes.DOUBLE,
+    defaultValue: 0,
+    notEmpty: true,
+    type: DataTypes.DOUBLE,    
+    validate: {
+      emptyField(value) {
+        if (this.isnewRecord || value !== undefined) {
+          const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
+          if (value === '') {
+            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
           }
         }
       }

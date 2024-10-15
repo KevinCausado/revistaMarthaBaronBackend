@@ -22,9 +22,9 @@ class MovimientoController {
 
 
       Producto.precio_entrada = req.body.precio_entrada
-      await Producto.save()      
+      await Producto.save()
 
-      await models.MovimientoDetalle.create({
+      const MovimientoDetalle = await models.MovimientoDetalle.create({
         id_movimiento: Movimiento.id,
         id_producto: req.body.id_producto,
         cantidad: req.body.cantidad,
@@ -33,6 +33,14 @@ class MovimientoController {
         precio_salida_unitario: 0,
         total: Producto.precio_entrada * req.body.cantidad
       }, { transaction })
+
+
+      const Inventario = await models.Inventario.findOne({ where: { id_producto: Producto.id } })
+
+      Inventario.id_producto = Producto.id
+      Inventario.cantidad = Inventario.cantidad + MovimientoDetalle.cantidad
+
+      await Inventario.save()
 
       await transaction.commit()
 
@@ -61,6 +69,7 @@ class MovimientoController {
 
       const transaction = await sequelize.transaction();
 
+
       const Movimiento = await models.Movimiento.create({
         tipo_movimiento: 2,
         descripcion: `Salida de producto: ${Producto.nombre}`,
@@ -70,16 +79,28 @@ class MovimientoController {
 
       const precio_salida_unitario = Producto.precio_entrada + (Producto.precio_entrada * (req.body.porcentaje_ganancia / 100))
 
-      await models.MovimientoDetalle.create({
+
+      const MovimientoDetalle = await models.MovimientoDetalle.create({
         id_movimiento: Movimiento.id,
-        id_producto: req.body.id_producto,
+        id_producto: Producto.id,
         cantidad: req.body.cantidad,
         precio_entrada_unitario: Producto.precio_entrada,
         porcentaje_ganancia: req.body.porcentaje_ganancia,
         precio_salida_unitario: precio_salida_unitario,
         total: precio_salida_unitario * req.body.cantidad
       }, { transaction })
+      
+      let ganancia = 0
+      ganancia = (MovimientoDetalle.precio_salida_unitario - MovimientoDetalle.precio_entrada_unitario) * MovimientoDetalle.cantidad
 
+      Movimiento.ganancia = ganancia
+      await Movimiento.save({ transaction })
+
+
+      const Inventario = await models.Inventario.findOne({ where: { id_producto: Producto.id } })
+      Inventario.id_producto = Producto.id
+      Inventario.cantidad = Inventario.cantidad - MovimientoDetalle.cantidad
+      await Inventario.save({transaction})
       await transaction.commit()
 
       const response = Movimiento.toJSON()
@@ -89,7 +110,7 @@ class MovimientoController {
       return res.status(200).json({
         status: 'Success',
         message: 'Registro creado',
-        data: response
+        data: { response, ganancia }
       })
     } catch (error) {
       return next(new AppError(error.message, error.statusCode))
