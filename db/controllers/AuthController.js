@@ -57,7 +57,7 @@ class AuthController {
       let response = await models.Usuario.findOne({
         where: { usuario: usuario },
         attributes: {
-          exclude: ['id', 'usuario', 'updatedAt', 'deletedAt']
+          exclude: ['usuario', 'updatedAt', 'deletedAt']
         },
         include: [{
           model: models.Persona,
@@ -74,6 +74,7 @@ class AuthController {
 
       const token = await generateToken({ id: response.id })
       response = response.toJSON()
+      delete response.id
       delete response.contrasena
 
       return res.status(200).json({
