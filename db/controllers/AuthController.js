@@ -37,7 +37,7 @@ class AuthController {
       return res.status(201).json({
         status: 'Success',
         message: 'Usuario creado',
-        data: result        
+        data: result
       })
 
     } catch (error) {
@@ -54,8 +54,18 @@ class AuthController {
       if (!usuario || !contrasena) {
         return next(new AppError('Digite /usuario/ y/o /contrasena/'))
       }
-      const response = await models.Usuario.findOne({
-        where: { usuario: usuario }
+      let response = await models.Usuario.findOne({
+        where: { usuario: usuario },
+        attributes: {
+          exclude: ['id', 'usuario', 'updatedAt', 'deletedAt']
+        },
+        include: [{
+          model: models.Persona,
+          as: 'persona_usuario',
+          attributes: {
+            exclude: ['createdat', 'updatedAt', 'deletedAt']
+          }
+        }]
       })
 
       if (!response || !(await bcrypt.compare(contrasena, response.contrasena))) {
@@ -63,10 +73,13 @@ class AuthController {
       }
 
       const token = await generateToken({ id: response.id })
+      response = response.toJSON()
+      delete response.contrasena
 
       return res.status(200).json({
         status: 'Success',
-        message: 'Inicio de sesion exitoso',        
+        message: 'Inicio de sesion exitoso',
+        data: response,
         token: token
       })
     } catch (error) {
