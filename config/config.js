@@ -10,12 +10,12 @@ module.exports = {
     "host": process.env.DB_HOST,
     "dialect": process.env.DB_DIALECT,
     "schema": process.env.DB_SCHEMA,
-    // dialectOptions: {
-    //   ssl: {
-    //     require: true,
-    //     rejectUnauthorized: false,
-    //   },
-    // },
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   },
   "test": {
     "username": "root",
@@ -25,10 +25,18 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  }
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASS,
+    "database": process.env.DB_NAME,
+    "port": process.env.DB_PORT,
+    "host": process.env.DB_HOST,
+    "dialect": process.env.DB_DIALECT,
+    "schema": process.env.DB_SCHEMA,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  },
 }

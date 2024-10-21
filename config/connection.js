@@ -1,5 +1,5 @@
 const initModels = require('../db/models/initModels')
-const sequelize = require('./sequelize')
+const {sequelize} = require('./sequelize')
 
 const connection = async () => {
   try {
