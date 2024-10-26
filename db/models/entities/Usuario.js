@@ -26,7 +26,7 @@ class Usuario extends Model {
       hooks: {
         beforeSave: async (usuario) => {
           if (usuario.contrasena !== usuario.confirmarContrasena) {
-            throw new AppError('Las contraseñas no coinciden', 400)
+            throw new AppError("Passwords don't match", 400)
           }
           usuario.contrasena = await bcrypt.hashSync(usuario.contrasena, 10)
         }

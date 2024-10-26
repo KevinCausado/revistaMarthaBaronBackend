@@ -1,5 +1,6 @@
 const AppError = require('../../utils/AppError')
 const { models } = require('../../config/sequelize')
+const responseHandler = require('../../utils/responseHandler')
 
 class EstadoController {
 
@@ -20,11 +21,7 @@ class EstadoController {
       delete response.updatedAt
       delete response.deletedAt
 
-      return res.status(200).json({
-        status: 'Success',
-        message: 'Registro creado',
-        data: response
-      })
+      return responseHandler.created(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -45,10 +42,7 @@ class EstadoController {
         }
       })
 
-      return res.status(200).json({
-        status: 'Success',
-        data: response
-      })
+      return responseHandler(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -74,10 +68,7 @@ class EstadoController {
         return next(new AppError("The registry doesn't exist", 404))
       }
 
-      return res.status(200).json({
-        status: 'Success',
-        data: response
-      })
+      return responseHandler.ok(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -108,10 +99,7 @@ class EstadoController {
 
       await response.save()
 
-      return res.status(200).json({
-        status: 'Success',
-        data: response
-      })
+      return responseHandler.updated(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -136,10 +124,7 @@ class EstadoController {
 
       await response.destroy()
 
-      return res.status(200).json({
-        status: 'Success',
-        message: 'Registro eliminado'
-      })
+      return responseHandler.deleted(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);

@@ -41,7 +41,7 @@ const InventarioSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
           }
         }
       }
@@ -56,10 +56,10 @@ const InventarioSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
           }
           if (value < 0 ) {
-            throw new AppError(`Campo "${fieldName}": No puedes vender productos sin stock.`,400);
+            throw new AppError(`Field '${fieldName}': You cannot sell products without stock`,400);
           }
         }
       }

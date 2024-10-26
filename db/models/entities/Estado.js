@@ -51,7 +51,7 @@ const EstadoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
           }
         }
       }
@@ -66,7 +66,7 @@ const EstadoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`,400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
           }
         }
       }

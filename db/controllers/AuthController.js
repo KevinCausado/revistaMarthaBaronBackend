@@ -49,7 +49,7 @@ class AuthController {
       const contrasena = req.body.contrasena
 
       if (!usuario || !contrasena) {
-        return next(new AppError('Type /usuario/ (and/or) /contrasena/'))
+        return next(new AppError('Type "usuario" (and/or) "contrasena"'))
       }
       let response = await models.Usuario.findOne({
         where: { usuario: usuario },

@@ -50,7 +50,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
         }
       }
@@ -69,7 +69,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
         }
       }
@@ -84,10 +84,10 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
           if (value < 0) {
-            throw new AppError(`Campo "${fieldName}": No puedes vender productos sin stock.`, 400);
+            throw new AppError(`Field '${fieldName}': You cannot sell products without stock`, 400);
           }
         }
       }
@@ -102,7 +102,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
           if (value < 0) {
             throw new AppError(`Campo "${fieldName}": No puedes colocar valores negativos.`, 400);
@@ -120,10 +120,10 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new Error(`El campo "${fieldName}" no puede estar vacío`);
+            throw new Error(`The field '${fieldName}' cannot be empty`);
           }
           if (value < 0 || value > 100) {
-            throw new AppError(`Campo "${fieldName}": El porcentaje debe estar entre 0 y 100.`, 400);
+            throw new AppError(`Field '${fieldName}': The percentage must be between 0 and 100.`, 400);
           }
         }
       },
@@ -138,7 +138,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
         }
       }
@@ -153,7 +153,7 @@ const MovimientoDetalleSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`El campo "${fieldName}" no puede estar vacío`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
         }
       }
