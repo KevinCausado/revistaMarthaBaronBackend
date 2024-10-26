@@ -8,7 +8,7 @@ class ProveedorController {
       let response = await models.Proveedor.findOne({ where: { codigo: req.body.codigo } })
 
       if (response) {
-        return next(new AppError('El registro existe', 409))
+        return next(new AppError('The registry exists', 409))
       }
 
       response = await models.Proveedor.create({
@@ -33,7 +33,7 @@ class ProveedorController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -57,7 +57,7 @@ class ProveedorController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -76,7 +76,7 @@ class ProveedorController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       return res.status(200).json({
@@ -86,7 +86,7 @@ class ProveedorController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -105,7 +105,7 @@ class ProveedorController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       response.tipo_servicio= req.body.tipo_servicio,
@@ -126,7 +126,7 @@ class ProveedorController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -142,7 +142,7 @@ class ProveedorController {
       const response = await models.Proveedor.findByPk(id)
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       await response.destroy()
@@ -154,7 +154,7 @@ class ProveedorController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores

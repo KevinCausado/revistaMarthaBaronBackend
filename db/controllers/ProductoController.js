@@ -8,7 +8,7 @@ class ProductoController {
       let response = await models.Producto.findOne({ where: { codigo: req.body.codigo } })
 
       if (response) {
-        return next(new AppError('El registro existe', 409))
+        return next(new AppError('The registry exists', 409))
       }
 
       const transaction = await sequelize.transaction();
@@ -61,7 +61,7 @@ class ProductoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -87,7 +87,7 @@ class ProductoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -106,7 +106,7 @@ class ProductoController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       return res.status(200).json({
@@ -116,7 +116,7 @@ class ProductoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -135,7 +135,7 @@ class ProductoController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       response.codigo = req.body.codigo,
@@ -155,7 +155,7 @@ class ProductoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -171,7 +171,7 @@ class ProductoController {
       const response = await models.Producto.findByPk(id)
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       await response.destroy()
@@ -183,7 +183,7 @@ class ProductoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores

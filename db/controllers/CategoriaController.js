@@ -21,11 +21,11 @@ class CategoriaController {
       delete response.updatedAt
       delete response.deletedAt
 
-      return responseHandler.created(res, data)
+      return responseHandler.created(res, response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -42,11 +42,11 @@ class CategoriaController {
         }
       })
 
-      return responseHandler.ok(res, data)
+      return responseHandler.ok(res, response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -68,11 +68,11 @@ class CategoriaController {
         return next(new AppError("The registry doesn't exist", 404))
       }
 
-      return responseHandler.ok(res,data)
+      return responseHandler.ok(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -99,7 +99,7 @@ class CategoriaController {
 
       await response.save()
 
-     return responseHandler.updated(res,data)
+     return responseHandler.updated(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -119,12 +119,12 @@ class CategoriaController {
       const response = await models.Categoria.findByPk(id)
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       await response.destroy()
 
-      return responseHandler.deleted(res,data)
+      return responseHandler.deleted(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);

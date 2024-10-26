@@ -15,10 +15,10 @@ connection()
 
 //Conexion a puerto
 app.listen(process.env.PORT, () => {
-  console.log(`Escuchando servidor en puerto: ${process.env.PORT}`)
+  console.log(`Listen server on PORT: ${process.env.PORT}`)
 })
-console.log('Entorno de desarrollo:', process.env.NODE_ENV)
-console.log('Conectado a la base de datos')
+console.log('ENVIROMENT:', process.env.NODE_ENV)
+console.log('Connected to the database')
 
 app.use(express.json())
 
@@ -37,7 +37,7 @@ app.use(`${BASE_URL}`, router)
 
 
 app.use('*', async(req, res, next) => {
-  return next (new AppError(`Ruta no encontrada en: ${req.originalUrl}`,404))
+  return next (new AppError(`Path not found in: ${req.originalUrl}`,404))
 })
 
 

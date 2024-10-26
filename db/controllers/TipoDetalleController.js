@@ -8,7 +8,7 @@ class TipoDetalleController {
       let response = await models.TipoDetalle.findOne({ where: { codigo: req.body.codigo } })
 
       if (response) {
-        return next(new AppError('El registro existe', 409))
+        return next(new AppError('The registry exists', 409))
       }
 
       response = await models.TipoDetalle.create({
@@ -29,7 +29,7 @@ class TipoDetalleController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -53,7 +53,7 @@ class TipoDetalleController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -72,7 +72,7 @@ class TipoDetalleController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       return res.status(200).json({
@@ -82,7 +82,7 @@ class TipoDetalleController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -101,7 +101,7 @@ class TipoDetalleController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       response.codigo = req.body.codigo
@@ -118,7 +118,7 @@ class TipoDetalleController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -134,7 +134,7 @@ class TipoDetalleController {
       const response = await models.TipoDetalle.findByPk(id)
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       await response.destroy()
@@ -146,7 +146,7 @@ class TipoDetalleController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores

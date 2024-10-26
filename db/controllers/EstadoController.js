@@ -8,7 +8,7 @@ class EstadoController {
       let response = await models.Estado.findOne({ where: { nombre: req.body.nombre } })
 
       if (response) {
-        return next(new AppError('El registro existe', 409))
+        return next(new AppError('The registry exists', 409))
       }
 
       response = await models.Estado.create({
@@ -28,7 +28,7 @@ class EstadoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -52,7 +52,7 @@ class EstadoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -71,7 +71,7 @@ class EstadoController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       return res.status(200).json({
@@ -81,7 +81,7 @@ class EstadoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -100,7 +100,7 @@ class EstadoController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       response.id_pais = req.body.id_pais
@@ -115,7 +115,7 @@ class EstadoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -131,7 +131,7 @@ class EstadoController {
       const response = await models.Estado.findByPk(id)
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       await response.destroy()
@@ -143,7 +143,7 @@ class EstadoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores

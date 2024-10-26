@@ -56,7 +56,7 @@ class MovimientoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }   
 
       return next(new AppError(error.message, error.statusCode));
@@ -121,7 +121,7 @@ class MovimientoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }   
 
       return next(new AppError(error.message, error.statusCode));
@@ -145,7 +145,7 @@ class MovimientoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }   
 
       return next(new AppError(error.message, error.statusCode));
@@ -164,7 +164,7 @@ class MovimientoController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       return res.status(200).json({
@@ -174,7 +174,7 @@ class MovimientoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }   
 
       return next(new AppError(error.message, error.statusCode));
@@ -193,7 +193,7 @@ class MovimientoController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       response.tipo_movimiento = req.body.tipo_movimiento,
@@ -211,7 +211,7 @@ class MovimientoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }   
 
       return next(new AppError(error.message, error.statusCode));
@@ -227,7 +227,7 @@ class MovimientoController {
       const response = await models.Movimiento.findByPk(id)
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       await response.destroy()
@@ -239,7 +239,7 @@ class MovimientoController {
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }   
 
       return next(new AppError(error.message, error.statusCode));

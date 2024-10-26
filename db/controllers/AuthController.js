@@ -74,12 +74,7 @@ class AuthController {
       delete response.id
       delete response.contrasena
 
-      return res.status(200).json({
-        status: 'Success',
-        message: 'Inicio de sesion exitoso',
-        data: response,
-        token: token
-      })
+      return responseHandler.userLogged(res,response,token)
     } catch (error) {
       return next(new AppError(error.message, error.statusCode))
     }
