@@ -32,7 +32,7 @@ class AuthController {
         return next(new AppError('Type "id_rol"', 400))
       }
 
-      await response.setRoles([id_rol]) // Campo (usuario_rol - - - tabla intermedia)
+      await response.setRol_usuario_rol([id_rol]) // Campo (usuario_rol - - - tabla intermedia)
 
       const result = await response.toJSON()
       delete result.id

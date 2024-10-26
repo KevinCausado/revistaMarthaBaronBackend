@@ -5,7 +5,7 @@ const {
 } = require('sequelize');
 const AppError = require('../../../utils/AppError');
 
-class Rol extends Model {
+class Opcion extends Model {
 
   static associate(models) {
     this.hasMany(models.Estado, {
@@ -13,34 +13,26 @@ class Rol extends Model {
       as: 'pais_estado'
     }),
 
-    this.belongsToMany(models.Usuario, {
-      through:'usuario_rol',
-      foreignKey: 'id_rol',
-      otherKey:'id_usuario',
-      as: 'usuario_usuario_rol',
-      allowNull:true
-    })
-
-    this.belongsToMany(models.Opcion, {
+    this.belongsToMany(models.Rol, {
       through:'opcion_rol',
-      foreignKey: 'id_rol',
-      otherKey:'id_opcion',      
-      as: 'rol_opcion_rol'
+      foreignKey: 'id_opcion',
+      otherKey:'id_rol',      
+      as: 'opcion_opcion_rol'
     })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      modelName: 'Rol',
-      tableName: 'rol',
+      modelName: 'Opcion',
+      tableName: 'opcion',
       schema: process.env.DB_SCHEMA,
       paranoid: true
     }
   }
 }
 
-const RolSchema = {
+const OpcionSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -62,16 +54,11 @@ const RolSchema = {
       }
     }
   },
-  isAdmin: {
-    allowNull: false,
+  id_padre: {
+    allowNull: true,
     notEmpty: true,
-    type: DataTypes.BOOLEAN,    
+    type: DataTypes.INTEGER,    
   },
-  isSuperAdmin: {
-    allowNull: false,
-    notEmpty: true,
-    type: DataTypes.BOOLEAN,    
-  },  
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE
@@ -85,7 +72,7 @@ const RolSchema = {
   }
 }
 
-module.exports = { Rol, RolSchema }
+module.exports = { Opcion, OpcionSchema }
 
 
 

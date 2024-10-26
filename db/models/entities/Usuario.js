@@ -19,7 +19,7 @@ class Usuario extends Model {
       through:'usuario_rol',
       foreignKey: 'id_usuario',
       otherKey:'id_rol',
-      as: 'roles',
+      as: 'rol_usuario_rol',
       allowNull:true
     })
   }
