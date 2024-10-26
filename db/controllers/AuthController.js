@@ -114,10 +114,7 @@ class AuthController {
   static restrictTo(...UserTypes) {
     return async (req, res, next) => {
       if (!UserTypes.includes(req.usuario.id)) { // Rol
-        return res.status(403).json({
-          status: 'Forbidden',
-          message: 'No tienes permitido realizar esta accion'
-        })
+        return next(new AppError('No tienes permitido realizar esta acción', 403))
       }
       next()
     }

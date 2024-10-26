@@ -1,3 +1,4 @@
+
 const responseHandler = {
   ok: (res, data = null) => {
     return res.status(200).json({
@@ -26,6 +27,23 @@ const responseHandler = {
       data: []
     })
   },
+
+
+  // User
+  userCreated: (res, data = null) => {
+    return res.status(201).json({
+      message: 'User created succesfully',
+      data
+    })
+  },
+
+  userLogged: (res, data = null, token = null) => {
+    return res.status(200).json({
+      message: 'Succesfull login',
+      data,
+      token
+    })
+  }
 }
 
 module.exports = responseHandler
