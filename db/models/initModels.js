@@ -1,16 +1,16 @@
 const { Usuario, UsuarioSchema } = require('./entities/Usuario') //OK   
-const { Tipo, TipoSchema } = require('./entities/Tipo') // OK
-const { TipoDetalle, TipoDetalleSchema } = require('./entities/TipoDetalle') // OK
-const { Persona, PersonaSchema } = require('./entities/Persona') // OK
-const { Pais, PaisSchema } = require('./entities/Pais') // Ok
-const { Estado, EstadoSchema } = require('./entities/Estado') // OK
-const { Ciudad, CiudadSchema } = require('./entities/Ciudad') // OK
-const { Categoria, CategoriaSchema } = require('./entities/Categoria') // OK
-const { Proveedor, ProveedorSchema } = require('./entities/Proveedor') // OK
-const { Producto, ProductoSchema } = require('./entities/Producto') // OK
-const { Movimiento, MovimientoSchema } = require('./entities/Movimiento') // OK
-const { MovimientoDetalle, MovimientoDetalleSchema } = require('./entities/MovimientoDetalle') // OK
-const { Inventario, InventarioSchema } = require('./entities/Inventario') // OK
+const { Tipo, TipoSchema } = require('./entities/Tipo') 
+const { TipoDetalle, TipoDetalleSchema } = require('./entities/TipoDetalle') 
+const { Persona, PersonaSchema } = require('./entities/Persona') 
+const { Pais, PaisSchema } = require('./entities/Pais') // OK
+const { Estado, EstadoSchema } = require('./entities/Estado') 
+const { Ciudad, CiudadSchema } = require('./entities/Ciudad') // Ok
+const { Categoria, CategoriaSchema } = require('./entities/Categoria') 
+const { Proveedor, ProveedorSchema } = require('./entities/Proveedor') 
+const { Producto, ProductoSchema } = require('./entities/Producto') 
+const { Movimiento, MovimientoSchema } = require('./entities/Movimiento') 
+const { MovimientoDetalle, MovimientoDetalleSchema } = require('./entities/MovimientoDetalle') 
+const { Inventario, InventarioSchema } = require('./entities/Inventario') 
 
 
 const initModels = (sequelize) => {

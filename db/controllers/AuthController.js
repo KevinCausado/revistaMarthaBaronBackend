@@ -2,6 +2,7 @@ const AppError = require('../../utils/AppError')
 const { models } = require('../../config/sequelize')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const responseHandler = require('../../utils/responseHandler')
 
 
 const generateToken = (payload) => {
@@ -34,11 +35,7 @@ class AuthController {
       delete result.updatedAt
       delete result.deletedAt
 
-      return res.status(201).json({
-        status: 'Success',
-        message: 'Usuario creado',
-        data: result
-      })
+      return responseHandler.created(res,result)
 
     } catch (error) {
       return next(new AppError(error.message, error.statusCode))
@@ -52,7 +49,7 @@ class AuthController {
       const contrasena = req.body.contrasena
 
       if (!usuario || !contrasena) {
-        return next(new AppError('Digite /usuario/ y/o /contrasena/'))
+        return next(new AppError('Type /usuario/ (and/or) /contrasena/'))
       }
       let response = await models.Usuario.findOne({
         where: { usuario: usuario },
@@ -69,7 +66,7 @@ class AuthController {
       })
 
       if (!response || !(await bcrypt.compare(contrasena, response.contrasena))) {
-        return next(new AppError('Credenciales invalidas', 401))
+        return next(new AppError('invalid credentials', 401))
       }
 
       const token = await generateToken({ id: response.id })
@@ -100,7 +97,7 @@ class AuthController {
       const response = await models.Usuario.findByPk(TokenDetail.id)
 
       if (!response) {
-        return next(new AppError('El usuario no existe', 404))
+        return next(new AppError("The user doesn't exist", 404))
       }
 
       req.usuario = response
@@ -114,7 +111,7 @@ class AuthController {
   static restrictTo(...UserTypes) {
     return async (req, res, next) => {
       if (!UserTypes.includes(req.usuario.id)) { // Rol
-        return next(new AppError('No tienes permitido realizar esta acción', 403))
+        return next(new AppError('You are not allowed to do this action', 403))
       }
       next()
     }

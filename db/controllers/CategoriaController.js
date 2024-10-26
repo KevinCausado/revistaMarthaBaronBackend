@@ -1,5 +1,6 @@
 const AppError = require('../../utils/AppError')
 const { models } = require('../../config/sequelize')
+const responseHandler = require('../../utils/responseHandler')
 
 class CategoriaController {
 
@@ -8,7 +9,7 @@ class CategoriaController {
       let response = await models.Categoria.findOne({ where: { codigo: req.body.codigo } })
 
       if (response) {
-        return next(new AppError('El registro existe', 409))
+        return next(new AppError('The registry exists', 409))
       }
 
       response = await models.Categoria.create({
@@ -20,11 +21,7 @@ class CategoriaController {
       delete response.updatedAt
       delete response.deletedAt
 
-      return res.status(200).json({
-        status: 'Success',
-        message: 'Registro creado',
-        data: response
-      })
+      return responseHandler.created(res, data)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -45,10 +42,7 @@ class CategoriaController {
         }
       })
 
-      return res.status(200).json({
-        status: 'Success',
-        data: response
-      })
+      return responseHandler.ok(res, data)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -71,13 +65,10 @@ class CategoriaController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
-      return res.status(200).json({
-        status: 'Success',
-        data: response
-      })
+      return responseHandler.ok(res,data)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -100,7 +91,7 @@ class CategoriaController {
       })
 
       if (!response) {
-        return next(new AppError('El registro no existe', 404))
+        return next(new AppError("The registry doesn't exist", 404))
       }
 
       response.codigo = req.body.codigo
@@ -108,14 +99,11 @@ class CategoriaController {
 
       await response.save()
 
-      return res.status(200).json({
-        status: 'Success',
-        data: response
-      })
+     return responseHandler.updated(res,data)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores
@@ -136,14 +124,11 @@ class CategoriaController {
 
       await response.destroy()
 
-      return res.status(200).json({
-        status: 'Success',
-        message: 'Registro eliminado'
-      })
+      return responseHandler.deleted(res,data)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
-        return next(new AppError(`Error de validación: ${messages.join(', ')}`, 400));
+        return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
       }
 
       // Manejar otros errores

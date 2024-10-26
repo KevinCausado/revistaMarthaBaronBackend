@@ -6,22 +6,22 @@ class PaisController {
 
   static async create(req, res, next) {
     try {
-      let data = await models.Pais.findOne({ where: { nombre: req.body.nombre } })
+      let response = await models.Pais.findOne({ where: { nombre: req.body.nombre } })
 
-      if (data) {
+      if (response) {
         return next(new AppError('El registro existe', 409))
       }
 
-      data = await models.Pais.create({
+      response = await models.Pais.create({
         codigo: req.body.codigo,
         nombre: req.body.nombre
       })
 
-      data = data.toJSON()
-      delete data.updatedAt
-      delete data.deletedAt
+      response = response.toJSON()
+      delete response.updatedAt
+      delete response.deletedAt
 
-      return responseHandler.created(res, data)
+      return responseHandler.created(res, response)
 
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
@@ -37,7 +37,7 @@ class PaisController {
 
   static async getAll(req, res, next) {
     try {
-      const data = await models.Pais.findAll({
+      const response = await models.Pais.findAll({
         attributes: {
           exclude: ['updatedAt', 'deletedAt']
         },
@@ -60,7 +60,7 @@ class PaisController {
           ],
       })
 
-      return responseHandler.ok(res, data)
+      return responseHandler.ok(res, response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -76,7 +76,7 @@ class PaisController {
   static async getById(req, res, next) {
     try {
       const id = req.params.id
-      const data = await models.Pais.findByPk(id, {
+      const response = await models.Pais.findByPk(id, {
         attributes: {
           exclude: ['updatedAt', 'deletedAt']
         },
@@ -99,11 +99,11 @@ class PaisController {
           ],
       })
 
-      if (!data) {
+      if (!response) {
         return next(new AppError('El registro no existe', 404))
       }
 
-      return responseHandler.ok(res, data)
+      return responseHandler.ok(res, response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -119,22 +119,22 @@ class PaisController {
   static async Update(req, res, next) {
     try {
       const id = req.params.id
-      const data = await models.Pais.findByPk(id, {
+      const response = await models.Pais.findByPk(id, {
         attributes: {
           exclude: ['createdAt', 'deletedAt']
         }
       })
 
-      if (!data) {
+      if (!response) {
         return next(new AppError('El registro no existe', 404))
       }
 
-      data.codigo = req.body.codigo
-      data.nombre = req.body.nombre
+      response.codigo = req.body.codigo
+      response.nombre = req.body.nombre
 
-      await data.save()
+      await response.save()
 
-      return responseHandler.updated(res, data)
+      return responseHandler.updated(res, response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
@@ -151,15 +151,15 @@ class PaisController {
   static async Delete(req, res, next) {
     try {
       const id = req.params.id
-      const data = await models.Pais.findByPk(id)
+      const response = await models.Pais.findByPk(id)
 
-      if (!data) {
+      if (!response) {
         return next(new AppError('El registro no existe', 404))
       }
 
-      await data.destroy()
+      await response.destroy()
 
-      return responseHandler.deleted(res,data)
+      return responseHandler.deleted(res,response)
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
