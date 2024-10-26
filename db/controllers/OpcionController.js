@@ -12,7 +12,7 @@ class OpcionController {
         return next(new AppError('The registry exists', 409))
       }
 
-      if (req.body_id_padre !== null) {
+      if (req.body.id_padre !== null) {
         const searchParent = await models.Opcion.findOne({ where: { id: req.body.id_padre } })
 
         if (!searchParent) {
