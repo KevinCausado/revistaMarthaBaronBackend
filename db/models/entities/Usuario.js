@@ -14,6 +14,14 @@ class Usuario extends Model {
       as: 'persona_usuario',
       allowNull:true
     })
+
+    this.belongsToMany(models.Rol, {
+      through:'usuario_rol',
+      foreignKey: 'id_usuario',
+      otherKey:'id_rol',
+      as: 'roles',
+      allowNull:true
+    })
   }
 
   static config(sequelize) {

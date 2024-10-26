@@ -11,6 +11,7 @@ const { Producto, ProductoSchema } = require('./entities/Producto') // OK
 const { Movimiento, MovimientoSchema } = require('./entities/Movimiento') // OK
 const { MovimientoDetalle, MovimientoDetalleSchema } = require('./entities/MovimientoDetalle') // OK
 const { Inventario, InventarioSchema } = require('./entities/Inventario') // OK
+const { Rol, RolSchema } = require('./entities/Rol')
 
 
 const initModels = (sequelize) => {
@@ -27,7 +28,8 @@ const initModels = (sequelize) => {
     Producto: Producto.init(ProductoSchema, Producto.config(sequelize)),
     Movimiento: Movimiento.init(MovimientoSchema, Movimiento.config(sequelize)),
     MovimientoDetalle: MovimientoDetalle.init(MovimientoDetalleSchema, MovimientoDetalle.config(sequelize)),
-    Inventario: Inventario.init(InventarioSchema, Inventario.config(sequelize))
+    Inventario: Inventario.init(InventarioSchema, Inventario.config(sequelize)),
+    Rol: Rol.init(RolSchema, Rol.config(sequelize)),
   }
 
   Object.values((models)).forEach((model) => {

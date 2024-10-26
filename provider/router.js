@@ -11,7 +11,7 @@ const ProductoController = require('../db/controllers/ProductoController')
 const MovimientoController = require('../db/controllers/MovimientoController')
 const MovimientoDetalleController = require('../db/controllers/MovimientoDetalleController')
 const InventarioController = require('../db/controllers/InventarioController')
-
+const RolController = require('../db/controllers/RolController')
 
 const router = require('express').Router()
 
@@ -29,7 +29,7 @@ const routes = [
     path: '/auth/signup/',
     method: 'post',
     handler: AuthController.signup,
-    protected: true,
+    protected: false,
   },
 
   //Pais
@@ -433,6 +433,38 @@ const routes = [
     handler: InventarioController.Delete,
     protected: true,
   },
+
+    //Inventario
+    {
+      path: '/rol/',
+      method: 'post',
+      handler: RolController.create,
+      protected: true,
+    },
+    {
+      path: '/rol/',
+      method: 'get',
+      handler: RolController.getAll,
+      protected: true,
+    },
+    {
+      path: '/rol/:id',
+      method: 'get',
+      handler: RolController.getById,
+      protected: true,
+    },
+    {
+      path: '/rol/:id',
+      method: 'patch',
+      handler: RolController.Update,
+      protected: true,
+    },
+    {
+      path: '/rol/:id',
+      method: 'delete',
+      handler: RolController.Delete,
+      protected: true,
+    },
 
 ]
 

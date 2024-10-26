@@ -19,6 +19,7 @@ class AuthController {
       const contrasena = req.body.contrasena
       const confirmarContrasena = req.body.confirmarContrasena
       const id_persona = req.body.id_persona
+      const id_rol = req.body.id_rol
 
       const response = await models.Usuario.create({
         usuario: usuario,
@@ -26,6 +27,12 @@ class AuthController {
         confirmarContrasena: confirmarContrasena,
         id_persona: id_persona
       })
+
+      if (!id_rol) {
+        return next(new AppError('Type "id_rol"', 400))
+      }
+
+      await response.setRoles([id_rol]) // Campo (usuario_rol - - - tabla intermedia)
 
       const result = await response.toJSON()
       delete result.id
@@ -35,7 +42,7 @@ class AuthController {
       delete result.updatedAt
       delete result.deletedAt
 
-      return responseHandler.created(res,result)
+      return responseHandler.created(res, result)
 
     } catch (error) {
       return next(new AppError(error.message, error.statusCode))
@@ -49,7 +56,7 @@ class AuthController {
       const contrasena = req.body.contrasena
 
       if (!usuario || !contrasena) {
-        return next(new AppError('Type "usuario" (and/or) "contrasena"'))
+        return next(new AppError('Type "usuario" (and/or) "contrasena"', 400))
       }
       let response = await models.Usuario.findOne({
         where: { usuario: usuario },
@@ -74,7 +81,7 @@ class AuthController {
       delete response.id
       delete response.contrasena
 
-      return responseHandler.userLogged(res,response,token)
+      return responseHandler.userLogged(res, response, token)
     } catch (error) {
       return next(new AppError(error.message, error.statusCode))
     }
