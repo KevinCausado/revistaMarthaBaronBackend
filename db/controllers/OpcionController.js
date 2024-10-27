@@ -21,7 +21,7 @@ class OpcionController {
       if (!response) {
         if (req.body.id_padre !== null) {
           const searchParent = await models.Opcion.findOne({ where: { id: req.body.id_padre } })
-  
+
           if (!searchParent) {
             return next(new AppError("The 'padre_id' doesn't exist", 404))
           }
@@ -30,24 +30,25 @@ class OpcionController {
         response = await models.Opcion.create({
           nombre: req.body.nombre,
           id_padre: req.body.id_padre
-        })     
-  
+        })
+
         await response.setOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
-      }
-      
-      const relationExists = await models.sequelize.query(
-        'SELECT * FROM "revista"."opcion_rol" WHERE id_rol = ? AND id_opcion = ?',
-        {
-          replacements: [Rol.id, response.id],
-          type: models.sequelize.QueryTypes.SELECT
+      } else {
+
+        const relationExists = await models.sequelize.query(
+          'SELECT * FROM "revista"."opcion_rol" WHERE id_rol = ? AND id_opcion = ?',
+          {
+            replacements: [Rol.id, response.id],
+            type: models.sequelize.QueryTypes.SELECT
+          }
+        );
+
+        if (relationExists.length > 0) {
+          return next(new AppError("'Role' is assigned to 'Option'", 400));
         }
-      );
 
-      if (relationExists.length > 0) {
-        return next(new AppError("'Role' is assigned to 'Option'", 400));
+        await response.addOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol        
       }
-
-      await response.addOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
 
       response = response.toJSON()
       delete response.updatedAt

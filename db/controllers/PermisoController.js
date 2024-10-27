@@ -7,7 +7,7 @@ class PermisoController {
 
   static async create(req, res, next) {
     try {
-      var response = await models.Permiso.findOne({where: { nombre: req.body.nombre }})
+      var response = await models.Permiso.findOne({ where: { nombre: req.body.nombre } })
       var Opcion = await models.Opcion.findOne({ where: { id: req.body.id_opcion } })
 
       if (!response) {
@@ -25,7 +25,7 @@ class PermisoController {
 
         await response.setPermiso_opcion_permiso([req.body.id_opcion])  // Inserta id_opcion en opcion_permiso
       } else {
-         
+
         const relationExists = await models.sequelize.query(
           'SELECT * FROM "revista"."opcion_permiso" WHERE id_permiso = ? AND id_opcion = ?',
           {
@@ -40,18 +40,19 @@ class PermisoController {
 
         await response.addPermiso_opcion_permiso([req.body.id_opcion])  // Inserta id_opcion en opcion_permiso
 
-        response = response.toJSON()
-        delete response.updatedAt
-        delete response.deletedAt
-      }      
-     
+      }
+      
+      response = response.toJSON()
+      delete response.updatedAt
+      delete response.deletedAt
+
       return responseHandler.created(res, response)
 
     } catch (error) {
       if (error.name === 'SequelizeValidationError') {
         const messages = error.errors.map(e => e.message);
         return next(new AppError(`Validation Error: ${messages.join(', ')}`, 400));
-      }       
+      }
 
       // Manejar otros errores
       return next(new AppError(error.message, error.statusCode));
