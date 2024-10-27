@@ -8,7 +8,7 @@ const AppError = require('../../../utils/AppError');
 class Permiso extends Model {
 
   static associate(models) {
-    this.belongsToMany(models.Permiso, {
+    this.belongsToMany(models.Opcion, {
       through: {
         model: 'opcion_permiso',
         unique: false

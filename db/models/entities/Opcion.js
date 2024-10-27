@@ -19,8 +19,7 @@ class Opcion extends Model {
         unique: true,
         fields: ['id_opcion', 'id_rol']
       }
-    }),
-    
+    }),    
       this.belongsToMany(models.Permiso, {
         through: {
           model: 'opcion_permiso',

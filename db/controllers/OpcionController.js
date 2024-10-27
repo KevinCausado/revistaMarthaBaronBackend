@@ -33,7 +33,19 @@ class OpcionController {
         })     
   
         await response.setOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
-      }     
+      }
+      
+      const relationExists = await models.sequelize.query(
+        'SELECT * FROM "revista"."opcion_rol" WHERE id_rol = ? AND id_opcion = ?',
+        {
+          replacements: [Rol.id, response.id],
+          type: models.sequelize.QueryTypes.SELECT
+        }
+      );
+
+      if (relationExists.length > 0) {
+        return next(new AppError("'Role' is assigned to 'Option'", 400));
+      }
 
       await response.addOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
 

@@ -34,6 +34,7 @@ const initModels = (sequelize) => {
     Rol: Rol.init(RolSchema, Rol.config(sequelize)),
     Opcion: Opcion.init(OpcionSchema, Opcion.config(sequelize)),
     Permiso: Permiso.init(PermisoSchema, Permiso.config(sequelize)),
+    sequelize
   }
 
   Object.values((models)).forEach((model) => {
