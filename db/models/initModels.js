@@ -13,6 +13,7 @@ const { MovimientoDetalle, MovimientoDetalleSchema } = require('./entities/Movim
 const { Inventario, InventarioSchema } = require('./entities/Inventario') // OK
 const { Rol, RolSchema } = require('./entities/Rol')
 const { Opcion, OpcionSchema } = require('./entities/Opcion')
+const { Permiso, PermisoSchema } = require('./entities/Permiso')
 
 
 const initModels = (sequelize) => {
@@ -32,6 +33,7 @@ const initModels = (sequelize) => {
     Inventario: Inventario.init(InventarioSchema, Inventario.config(sequelize)),
     Rol: Rol.init(RolSchema, Rol.config(sequelize)),
     Opcion: Opcion.init(OpcionSchema, Opcion.config(sequelize)),
+    Permiso: Permiso.init(PermisoSchema, Permiso.config(sequelize)),
   }
 
   Object.values((models)).forEach((model) => {

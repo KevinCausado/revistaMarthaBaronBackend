@@ -5,34 +5,29 @@ const {
 } = require('sequelize');
 const AppError = require('../../../utils/AppError');
 
-class Opcion extends Model {
-  static associate(models) {
-    this.belongsToMany(models.Rol, {
-      through: 'opcion_rol',
-      foreignKey: 'id_opcion',
-      otherKey: 'id_rol',
-      as: 'opcion_opcion_rol'
-    }),
-    this.belongsToMany(models.Permiso, {
+class Permiso extends Model {
+
+  static associate(models) {    
+    this.belongsToMany(models.Opcion, {
       through:'opcion_permiso',
-      foreignKey: 'id_opcion',
-      otherKey:'id_permiso',      
-      as: 'opcion_opcion_permiso'
+      foreignKey: 'id_permiso',
+      otherKey:'id_opcion',      
+      as: 'permiso_opcion_permiso'
     })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      modelName: 'Opcion',
-      tableName: 'opcion',
+      modelName: 'Permiso',
+      tableName: 'permiso',
       schema: process.env.DB_SCHEMA,
       paranoid: true
     }
   }
 }
 
-const OpcionSchema = {
+const PermisoSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -48,17 +43,12 @@ const OpcionSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
           }
         }
       }
     }
-  },
-  id_padre: {
-    allowNull: true,
-    notEmpty: true,
-    type: DataTypes.INTEGER,
-  },
+  },  
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE
@@ -72,7 +62,7 @@ const OpcionSchema = {
   }
 }
 
-module.exports = { Opcion, OpcionSchema }
+module.exports = { Permiso, PermisoSchema }
 
 
 

@@ -8,23 +8,18 @@ const AppError = require('../../../utils/AppError');
 class Rol extends Model {
 
   static associate(models) {
-    this.hasMany(models.Estado, {
-      foreignKey: 'id_pais',
-      as: 'pais_estado'
-    }),
-
     this.belongsToMany(models.Usuario, {
-      through:'usuario_rol',
+      through: 'usuario_rol',
       foreignKey: 'id_rol',
-      otherKey:'id_usuario',
+      otherKey: 'id_usuario',
       as: 'usuario_usuario_rol',
-      allowNull:true
+      allowNull: true
     })
 
     this.belongsToMany(models.Opcion, {
-      through:'opcion_rol',
+      through: 'opcion_rol',
       foreignKey: 'id_rol',
-      otherKey:'id_opcion',      
+      otherKey: 'id_opcion',
       as: 'rol_opcion_rol'
     })
   }
@@ -56,7 +51,7 @@ const RolSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
         }
       }
@@ -65,13 +60,13 @@ const RolSchema = {
   isAdmin: {
     allowNull: false,
     notEmpty: true,
-    type: DataTypes.BOOLEAN,    
+    type: DataTypes.BOOLEAN,
   },
   isSuperAdmin: {
     allowNull: false,
     notEmpty: true,
-    type: DataTypes.BOOLEAN,    
-  },  
+    type: DataTypes.BOOLEAN,
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

@@ -13,6 +13,7 @@ const MovimientoDetalleController = require('../db/controllers/MovimientoDetalle
 const InventarioController = require('../db/controllers/InventarioController')
 const RolController = require('../db/controllers/RolController')
 const OpcionController = require('../db/controllers/OpcionController')
+const PermisoController = require('../db/controllers/PermisoController')
 
 const router = require('express').Router()
 
@@ -496,6 +497,38 @@ const routes = [
         path: '/opcion/:id',
         method: 'delete',
         handler: OpcionController.Delete,
+        protected: true,
+      },
+
+      //Permiso
+      {
+        path: '/permiso/',
+        method: 'post',
+        handler: PermisoController.create,
+        protected: true,
+      },
+      {
+        path: '/opcion/',
+        method: 'get',
+        handler: PermisoController.getAll,
+        protected: true,
+      },
+      {
+        path: '/permiso/:id',
+        method: 'get',
+        handler: PermisoController.getById,
+        protected: true,
+      },
+      {
+        path: '/permiso/:id',
+        method: 'patch',
+        handler: PermisoController.Update,
+        protected: true,
+      },
+      {
+        path: '/permiso/:id',
+        method: 'delete',
+        handler: PermisoController.Delete,
         protected: true,
       },
 
