@@ -16,11 +16,17 @@ class Usuario extends Model {
     })
 
     this.belongsToMany(models.Rol, {
-      through:'usuario_rol',
+      through: {
+        model: 'usuario_rol',
+        unique: false
+      },
       foreignKey: 'id_usuario',
-      otherKey:'id_rol',
+      otherKey: 'id_rol',
       as: 'rol_usuario_rol',
-      allowNull:true
+      indexes: {
+        unique: true,
+        fields: ['id_usuario', 'id_rol']
+      }
     })
   }
 

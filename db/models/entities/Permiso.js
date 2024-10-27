@@ -7,12 +7,19 @@ const AppError = require('../../../utils/AppError');
 
 class Permiso extends Model {
 
-  static associate(models) {    
-    this.belongsToMany(models.Opcion, {
-      through:'opcion_permiso',
+  static associate(models) {
+    this.belongsToMany(models.Permiso, {
+      through: {
+        model: 'opcion_permiso',
+        unique: false
+      },
       foreignKey: 'id_permiso',
-      otherKey:'id_opcion',      
-      as: 'permiso_opcion_permiso'
+      otherKey: 'id_opcion',
+      as: 'permiso_opcion_permiso',
+      indexes: {
+        unique: true,
+        fields: ['id_opcion', 'id_permiso']
+      }
     })
   }
 
@@ -43,12 +50,12 @@ const PermisoSchema = {
         if (this.isnewRecord || value !== undefined) {
           const fieldName = Object.keys(this.rawAttributes).find(key => this.getDataValue(key) === value);
           if (value === '') {
-            throw new AppError(`The field '${fieldName}' cannot be empty`,400);
+            throw new AppError(`The field '${fieldName}' cannot be empty`, 400);
           }
         }
       }
     }
-  },  
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE

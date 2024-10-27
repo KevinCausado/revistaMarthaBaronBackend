@@ -8,17 +8,32 @@ const AppError = require('../../../utils/AppError');
 class Opcion extends Model {
   static associate(models) {
     this.belongsToMany(models.Rol, {
-      through: 'opcion_rol',
+      through: {
+        model: 'opcion_rol',
+        unique: false
+      },
       foreignKey: 'id_opcion',
       otherKey: 'id_rol',
-      as: 'opcion_opcion_rol'
+      as: 'opcion_opcion_rol',
+      indexes: {
+        unique: true,
+        fields: ['id_opcion', 'id_rol']
+      }
     }),
-    this.belongsToMany(models.Permiso, {
-      through:'opcion_permiso',
-      foreignKey: 'id_opcion',
-      otherKey:'id_permiso',      
-      as: 'opcion_opcion_permiso'
-    })
+    
+      this.belongsToMany(models.Permiso, {
+        through: {
+          model: 'opcion_permiso',
+          unique: false
+        },
+        foreignKey: 'id_opcion',
+        otherKey: 'id_permiso',
+        as: 'opcion_opcion_permiso',
+        indexes: {
+          unique: true,
+          fields: ['id_opcion', 'id_permiso']
+        }
+      })
   }
 
   static config(sequelize) {

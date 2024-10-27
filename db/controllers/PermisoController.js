@@ -5,28 +5,33 @@ const responseHandler = require('../../utils/responseHandler')
 class PermisoController {
 
   static async create(req, res, next) {
-    try {   
+    try {
 
-      if (!req.body.id_opcion) {
-        return next(new AppError('Type "id_opcion"', 400))
+      var response = await models.Permiso.findOne({ where: { nombre: req.body.nombre } })
+      var Opcion = await models.Opcion.findOne({ where: { id: req.body.id_opcion } })
+
+      if (!response) {
+        if (!req.body.id_opcion) {
+          return next(new AppError('Type "id_opcion"', 400))
+        }
+
+        if (!Opcion) {
+          return next(new AppError("The 'option' doesn't exist", 404))
+        }
+
+        response = await models.Permiso.create({
+          nombre: req.body.nombre
+        })
+
+        await response.setPermiso_opcion_permiso([req.body.id_opcion])  // Inserta id_opcion en opcion_permiso
+      } else {
+
+       await response.addPermiso_opcion_permiso([req.body.id_opcion])  // Inserta id_opcion en opcion_permiso
+
+        response = response.toJSON()
+        delete response.updatedAt
+        delete response.deletedAt
       }
-
-      const Opcion = await models.Opcion.findOne({ where: { id: req.body.id_opcion } })
-
-      if (!Opcion) {
-        return next(new AppError("The 'option' doesn't exist", 404))
-      }
-
-      let response = await models.Permiso.create({
-        nombre: req.body.nombre
-      })
-
-      await response.setPermiso_opcion_permiso([req.body.id_opcion])  // Inserta id_opcion en opcion_permiso
-
-      response = response.toJSON()
-      delete response.updatedAt
-      delete response.deletedAt
-
       return responseHandler.created(res, response)
 
     } catch (error) {

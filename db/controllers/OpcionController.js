@@ -6,19 +6,7 @@ class OpcionController {
 
   static async create(req, res, next) {
     try {
-      let response = await models.Opcion.findOne({ where: { nombre: req.body.nombre } })
-
-      if (response) {
-        return next(new AppError('The registry exists', 409))
-      }
-
-      if (req.body.id_padre !== null) {
-        const searchParent = await models.Opcion.findOne({ where: { id: req.body.id_padre } })
-
-        if (!searchParent) {
-          return next(new AppError("The 'padre_id' doesn't exist", 404))
-        }
-      }      
+      var response = await models.Opcion.findOne({ where: { nombre: req.body.nombre } })
 
       if (!req.body.id_rol) {
         return next(new AppError('Type "id_rol"', 400))
@@ -30,12 +18,24 @@ class OpcionController {
         return next(new AppError("The 'rol doesn't exist", 404))
       }
 
-      response = await models.Opcion.create({
-        nombre: req.body.nombre,
-        id_padre: req.body.id_padre
-      })     
+      if (!response) {
+        if (req.body.id_padre !== null) {
+          const searchParent = await models.Opcion.findOne({ where: { id: req.body.id_padre } })
+  
+          if (!searchParent) {
+            return next(new AppError("The 'padre_id' doesn't exist", 404))
+          }
+        }
 
-      await response.setOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
+        response = await models.Opcion.create({
+          nombre: req.body.nombre,
+          id_padre: req.body.id_padre
+        })     
+  
+        await response.setOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
+      }     
+
+      await response.addOpcion_opcion_rol([req.body.id_rol])  // Inserta id_rol en opcion_rol
 
       response = response.toJSON()
       delete response.updatedAt
