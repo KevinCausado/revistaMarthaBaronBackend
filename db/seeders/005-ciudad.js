@@ -5,7 +5,13 @@ module.exports = {
     await queryInterface.bulkInsert({ tableName: 'ciudad', schema: process.env.DB_SCHEMA }, [
       {
         id_estado: 1,
-        nombre:'Barranquilla',
+        nombre:'BARRANQUILLA',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id_estado: 1,
+        nombre:'SOLEDAD',
         createdAt: new Date(),
         updatedAt: new Date()
       },

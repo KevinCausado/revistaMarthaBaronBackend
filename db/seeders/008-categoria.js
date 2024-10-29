@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.bulkInsert({ tableName: 'categoria', schema: process.env.DB_SCHEMA }, [
       {
         codigo: "CAT_00001",        
-        descripcion: "Perfume para mujer",        
+        descripcion: "PERFUME PARA MUJER",        
         createdAt: new Date(),
         updatedAt: new Date()
       },

@@ -15,7 +15,7 @@ class Usuario extends Model {
       allowNull:true
     })
 
-    this.belongsToMany(models.Rol, {
+    this.belongsToMany(models.Rol, {  // Business Model at moment: 1 admin
       through: {
         model: 'usuario_rol',
         unique: false

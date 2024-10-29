@@ -6,9 +6,9 @@ module.exports = {
       {
         tipo_servicio: "VIRTUAL",
         codigo: "PROV_00001",
-        nombre: "Proveedor 1",
-        direccion: "Calle 30 No.8-120",
-        email: "proveedor1@gmail.com",
+        nombre: "PROVEEDOR 1",
+        direccion: "CALLE 30 NO.8-120",
+        email: "PROVEEDOR1@GMAIL.COM",
         telefono: "312546987",
         id_ciudad: 1,
         createdAt: new Date(),

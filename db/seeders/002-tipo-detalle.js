@@ -5,21 +5,21 @@ module.exports = {
     await queryInterface.bulkInsert({ tableName: 'tipo_detalle', schema: process.env.DB_SCHEMA }, [
       {
         codigo: 'ENT',
-        descripcion: 'Entrada',
+        descripcion: 'ENTRADA',
         id_tipo: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         codigo: 'SAL',
-        descripcion: 'Salida',
+        descripcion: 'SALIDA',
         id_tipo: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         codigo: 'CC',
-        descripcion: 'Cédula de ciudadania',
+        descripcion: 'CEDULA DE CIUDADANIA',
         id_tipo: 2,
         createdAt: new Date(),
         updatedAt: new Date()

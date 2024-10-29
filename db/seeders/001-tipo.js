@@ -4,12 +4,12 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert({ tableName: 'tipo', schema: process.env.DB_SCHEMA }, [
       {
-        nombre: 'Movimiento',
+        nombre: 'MOVIMIENTO',
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        nombre: 'Documento',
+        nombre: 'DOCUMENTO',
         createdAt: new Date(),
         updatedAt: new Date()
       },

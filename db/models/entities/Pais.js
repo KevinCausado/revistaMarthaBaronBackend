@@ -20,7 +20,18 @@ class Pais extends Model {
       modelName: 'Pais',
       tableName: 'pais',
       schema: process.env.DB_SCHEMA,
-      paranoid: true
+      paranoid: true,
+      hooks: {
+        beforeSave: (instance) => {
+          Object.keys(instance.rawAttributes).forEach((field) => {
+            // console.log(`Campo: ${field} , Tipo de dato: ${instance.rawAttributes[field].type}`)
+            const fieldType = instance.rawAttributes[field].type;
+            if (fieldType == 'VARCHAR(255)' || fieldType == 'TEXT') {
+              instance[field] = instance[field].toUpperCase();
+            }
+          });
+        }
+      }
     }
   }
 }

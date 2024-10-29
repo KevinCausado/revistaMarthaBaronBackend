@@ -6,7 +6,11 @@ class OpcionController {
 
   static async create(req, res, next) {
     try {
-      var response = await models.Opcion.findOne({ where: { nombre: req.body.nombre } })
+      var response = await models.Opcion.findOne({ where: { nombre: req.body.nombre.toUpperCase()} })
+
+      if (response) {
+        return next(new AppError("'The 'Option' exists'", 400))
+      }
 
       if (!req.body.id_rol) {
         return next(new AppError('Type "id_rol"', 400))
