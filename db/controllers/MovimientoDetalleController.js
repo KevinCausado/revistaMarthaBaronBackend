@@ -193,7 +193,7 @@ class MovimientoDetalleController {
       const Producto = await models.Producto.findByPk(id_producto)
 
       if (!Producto) {
-        return next(new AppError('El producto no existe', 400))
+        return next(new AppError("The 'product' doesn't exist", 400))
       }
 
       const totalEntradas = await models.MovimientoDetalle.sum('total', {

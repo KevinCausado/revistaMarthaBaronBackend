@@ -9,7 +9,7 @@ class MovimientoController {
       const Producto = await models.Producto.findOne({ where: { id: req.body.id_producto } })
 
       if (!Producto) {
-        return next(new AppError('El producto no existe', 404))
+        return next(new AppError("The 'product' doesn't exist ", 404))
       }
 
       const transaction = await sequelize.transaction();
@@ -67,7 +67,7 @@ class MovimientoController {
       const Producto = await models.Producto.findOne({ where: { id: req.body.id_producto } })
 
       if (!Producto) {
-        return next(new AppError('El producto no existe', 404))
+        return next(new AppError("The 'product' doesn't exist ", 404))
       }
 
       const transaction = await sequelize.transaction();

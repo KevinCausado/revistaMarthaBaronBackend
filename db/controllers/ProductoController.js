@@ -1,12 +1,11 @@
 const AppError = require('../../utils/AppError')
 const { sequelize, models } = require('../../config/sequelize')
 const responseHandler = require('../../utils/responseHandler')
-
 class ProductoController {
 
   static async create(req, res, next) {
     try {
-      let response = await models.Producto.findOne({ where: { codigo: req.body.codigo } })
+      let response = await models.Producto.findOne({ where: { codigo: req.body.codigo.toUpperCase() } })
 
       if (response) {
         return next(new AppError('The registry exists', 409))

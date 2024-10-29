@@ -87,6 +87,50 @@ class AuthController {
     }
   }
 
+
+  static async updateUser(req, res, next) {
+    try {
+      const id = req.params.id
+      const usuario = req.body.usuario
+      const contrasena = req.body.contrasena
+      const confirmarContrasena = req.body.confirmarContrasena
+      const id_persona = req.body.id_persona
+      const id_rol = req.body.id_rol
+
+      const response = await models.Usuario.findOne({ where: { id: id } })
+
+
+      if (!response) {
+        return next(new AppError("The /user/ doesn't exist", 404))
+      }
+
+        response.usuario = usuario,
+        response.contrasena = contrasena,
+        response.confirmarContrasena = confirmarContrasena,
+        response.id_persona = id_persona
+
+      await response.save()
+
+      if (!id_rol) {
+        return next(new AppError('Type "id_rol"', 400))
+      }
+
+      await response.setRol_usuario_rol([id_rol]) // Campo (usuario_rol - - - tabla intermedia)
+
+      const result = await response.toJSON()
+      delete result.id
+      delete result.contrasena
+      delete result.confirmarContrasena
+      delete result.createdAt
+      delete result.updatedAt
+      delete result.deletedAt
+
+      return responseHandler.updated(res, result)
+    } catch (error) {
+      return next(new AppError(error.message, error.statusCode))
+    }
+  }
+
   static async authentication(req, res, next) {
     try {
 

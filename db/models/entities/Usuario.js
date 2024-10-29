@@ -12,21 +12,21 @@ class Usuario extends Model {
     this.belongsTo(models.Persona, {
       foreignKey: 'id_persona',
       as: 'persona_usuario',
-      allowNull:true
+      allowNull: true
     })
 
     this.belongsToMany(models.Rol, {  // Business Model at moment: 1 admin
       through: {
         model: 'usuario_rol',
-        unique: false
+        // unique: false
       },
       foreignKey: 'id_usuario',
       otherKey: 'id_rol',
       as: 'rol_usuario_rol',
-      indexes: {
-        unique: true,
-        fields: ['id_usuario', 'id_rol']
-      }
+      // indexes: {
+      //   unique: true,
+      //   fields: ['id_usuario', 'id_rol']
+      // }
     })
   }
 
@@ -75,7 +75,7 @@ const UsuarioSchema = {
     type: DataTypes.VIRTUAL,
   },
   id_persona: {
-    allowNull: true,    
+    allowNull: true,
     type: DataTypes.INTEGER,
     References: {
       model: 'Persona',

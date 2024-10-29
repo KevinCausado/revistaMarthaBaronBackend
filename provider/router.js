@@ -27,11 +27,16 @@ const routes = [
     protected: false,
   },
   {
-
     path: '/auth/signup/',
     method: 'post',
     handler: AuthController.signup,
     protected: false,
+  },
+  {
+    path: '/auth/update/:id',
+    method: 'patch',
+    handler: AuthController.updateUser,
+    protected: true,
   },
 
   //Pais

@@ -10,6 +10,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        nombre: "CLIENTE",
+        isSuperAdmin: false,
+        isAdmin: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
 
     ], {});
   },

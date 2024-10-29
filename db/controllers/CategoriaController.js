@@ -6,7 +6,7 @@ class CategoriaController {
 
   static async create(req, res, next) {
     try {
-      let response = await models.Categoria.findOne({ where: { codigo: req.body.codigo } })
+      let response = await models.Categoria.findOne({ where: { codigo: req.body.codigo.toUpperCase() } })
 
       if (response) {
         return next(new AppError('The registry exists', 409))

@@ -7,7 +7,7 @@ class PermisoController {
 
   static async create(req, res, next) {
     try {
-      var response = await models.Permiso.findOne({ where: { nombre: req.body.nombre } })
+      var response = await models.Permiso.findOne({ where: { nombre: req.body.nombre.toUpperCase() } })
       var Opcion = await models.Opcion.findOne({ where: { id: req.body.id_opcion } })
 
       if (!response) {

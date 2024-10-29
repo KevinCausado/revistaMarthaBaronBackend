@@ -6,7 +6,7 @@ class RolController {
 
   static async create(req, res, next) {
     try {
-      let response = await models.Rol.findOne({ where: { nombre: req.body.nombre } })
+      let response = await models.Rol.findOne({ where: { nombre: req.body.nombre.toUpperCase() } })
 
       if (response) {
         return next(new AppError('The registry exists', 409))

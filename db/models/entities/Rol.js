@@ -9,18 +9,18 @@ class Rol extends Model {
 
   static associate(models) {
   
-    this.belongsToMany(models.Rol, {  // Business Model at moment: 1 admin
+    this.belongsToMany(models.Usuario, {  // Business Model at moment: 1 admin
       through: {
         model: 'usuario_rol',
-        unique: false
+        // unique: false
       },
       foreignKey: 'id_rol',
       otherKey: 'id_usuario',
       as: 'usuario_usuario_rol',
-      indexes: {
-        unique: true,
-        fields: ['id_usuario', 'id_rol']
-      }
+      // indexes: {
+      //   unique: true,
+      //   fields: ['id_usuario', 'id_rol']
+      // }
     }),
 
     this.belongsToMany(models.Opcion, {  
